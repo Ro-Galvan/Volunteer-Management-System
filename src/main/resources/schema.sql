@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Nonprofit (
 	assignmentID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	title VARCHAR(100) NOT NULL,
 	additionalInfo VARCHAR(255),
-	`date` DATETIME NOT NULL,
+	`date` DATE NOT NULL,
     nonprofitID int,
 	FOREIGN KEY (nonprofitID) REFERENCES Nonprofit(nonprofitID)
 );
@@ -48,8 +48,8 @@ DESCRIBE Assignment;
 
 CREATE TABLE IF NOT EXISTS Timesheet (
 	timesheetID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	hoursLogged int NOT NULL,
-    `date` DATETIME NOT NULL,
+	hoursLogged VARCHAR(5) NOT NULL,
+    `date` DATE NOT NULL,
 	volunteerID int NOT NULL,
     assignmentID int NOT NULL,
     FOREIGN KEY (volunteerID) REFERENCES Volunteer(volunteerID),

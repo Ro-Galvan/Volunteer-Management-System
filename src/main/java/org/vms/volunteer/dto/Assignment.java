@@ -7,8 +7,8 @@ public class Assignment {
     private int id;
     private String title;
     private String additionalInfo;
-    private LocalDate date;
-//    FK association
+    private LocalDate date; //TODO MYSQL Format: YYYY-MM-DD
+//    FK association-one-to-many relationships-use composition to place an object inside another object
     private Nonprofit nonprofit;
 
     public Assignment() {

@@ -10,8 +10,8 @@ public class Nonprofit {
     private String email;
     private String address;
     private String mission;
-    /* managing the many to many relationship on the Nonprofit side since it is more likely that nonprofits will have more volunteers
-       VS a volunteer that may only volunteer 1 time at 1 place */
+    /* managing the many-to-many relationship on the Nonprofit side since it is more likely that
+    nonprofits will have more volunteers VS a volunteer that may only volunteer 1 time at 1 place */
     private List<Volunteer> volunteers;
 
 //  constructors
