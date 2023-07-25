@@ -17,12 +17,12 @@ CREATE TABLE IF NOT EXISTS Volunteer (
 	volunteerID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	firstName VARCHAR(20) NOT NULL,
 	lastName VARCHAR(30) NOT NULL,
-	phoneNum CHAR(10) NOT NULL,
+	phoneNum VARCHAR(12) NOT NULL,
 	email VARCHAR(30) NOT NULL,
     city VARCHAR(25) NOT NULL,
     state CHAR(2) NOT NULL,
     skillID int NOT NULL,
-    timesheetID int NOT NULL,
+    timesheetID int,
     FOREIGN KEY (skillID) REFERENCES skill(skillID)
 );
 DESCRIBE Volunteer;
@@ -30,7 +30,7 @@ DESCRIBE Volunteer;
 CREATE TABLE IF NOT EXISTS Nonprofit (
 	nonprofitID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	companyName VARCHAR(250) NOT NULL,
-	phoneNum CHAR(10) NOT NULL,
+	phoneNum VARCHAR(12) NOT NULL,
 	email VARCHAR(40) NOT NULL,
     address varchar(255) NOT NULL,
     mission VARCHAR(255) NOT NULL
