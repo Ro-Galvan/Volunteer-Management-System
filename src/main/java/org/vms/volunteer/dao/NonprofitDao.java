@@ -14,6 +14,7 @@ public interface NonprofitDao {
     void updateNonprofit(Nonprofit nonprofit);
     void deleteNonprofitByID(int id);
 
+
 //    needed for the many-to-many relationship that Nonprofit is managing
     List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer);
 
