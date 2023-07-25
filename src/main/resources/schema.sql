@@ -13,6 +13,25 @@ CREATE TABLE IF NOT EXISTS skill (
 	additionalInfo VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS Nonprofit (
+	nonprofitID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	companyName VARCHAR(250) NOT NULL,
+	phoneNum VARCHAR(12) NOT NULL,
+	email VARCHAR(40) NOT NULL,
+    address varchar(255) NOT NULL,
+    mission VARCHAR(255) NOT NULL
+  );
+  
+CREATE TABLE IF NOT EXISTS Assignment (
+	assignmentID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	title VARCHAR(100) NOT NULL,
+	additionalInfo VARCHAR(255),
+	`date` DATE NOT NULL,
+    nonprofitID int,
+	FOREIGN KEY (nonprofitID) REFERENCES Nonprofit(nonprofitID)
+);
+DESCRIBE Assignment;
+  
 CREATE TABLE IF NOT EXISTS Volunteer (
 	volunteerID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	firstName VARCHAR(20) NOT NULL,
@@ -27,25 +46,6 @@ CREATE TABLE IF NOT EXISTS Volunteer (
 );
 DESCRIBE Volunteer;
 
-CREATE TABLE IF NOT EXISTS Nonprofit (
-	nonprofitID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	companyName VARCHAR(250) NOT NULL,
-	phoneNum VARCHAR(12) NOT NULL,
-	email VARCHAR(40) NOT NULL,
-    address varchar(255) NOT NULL,
-    mission VARCHAR(255) NOT NULL
-  );
-
-  CREATE TABLE IF NOT EXISTS Assignment (
-	assignmentID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	title VARCHAR(100) NOT NULL,
-	additionalInfo VARCHAR(255),
-	`date` DATE NOT NULL,
-    nonprofitID int,
-	FOREIGN KEY (nonprofitID) REFERENCES Nonprofit(nonprofitID)
-);
-DESCRIBE Assignment;
-
 CREATE TABLE IF NOT EXISTS Timesheet (
 	timesheetID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	hoursLogged VARCHAR(5) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS Timesheet (
   );
   DESCRIBE Timesheet;
 
-  ALTER TABLE Volunteer
+ALTER TABLE Volunteer
 	ADD CONSTRAINT
     FOREIGN KEY FK_Timesheet_Volunteer(timesheetID)
     REFERENCES Timesheet (timesheetID);

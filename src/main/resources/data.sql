@@ -62,3 +62,14 @@ WHERE v.timesheetID IS NULL
 -- use a KEY column in the WHERE clause of the UPDATE statement. Since volunteerID is the primary key in the Volunteer table, we can use it in the WHERE clause to target specific rows
 -- the volunteerID from the Volunteer table as a KEY column in the WHERE clause. We also ensure that the volunteerID exists in the Timesheet table by using the IN subquery. This way, we avoid updating rows that don't have a corresponding timesheetID.
 AND v.volunteerID IN (SELECT volunteerID FROM Timesheet);
+
+INSERT INTO Nonprofit_Volunteer (nonprofitID, volunteerID) VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 2),
+    (2, 4),
+    (3, 3),
+    (4, 1),
+    (4, 4),
+    (4, 5);
