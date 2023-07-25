@@ -7,12 +7,6 @@ USE volunteerManagementSystem;
 -- CREATE DATABASE volunteerManagementSystemTest;
 -- USE volunteerManagementSystemTest;
 
-CREATE TABLE IF NOT EXISTS skill (
-	skillID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	title VARCHAR(50) NOT NULL,
-	additionalInfo VARCHAR(255)
-);
-
 CREATE TABLE IF NOT EXISTS Nonprofit (
 	nonprofitID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	companyName VARCHAR(250) NOT NULL,
@@ -22,6 +16,38 @@ CREATE TABLE IF NOT EXISTS Nonprofit (
     mission VARCHAR(255) NOT NULL
   );
   
+  CREATE TABLE IF NOT EXISTS Volunteer (
+	volunteerID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	firstName VARCHAR(20) NOT NULL,
+	lastName VARCHAR(30) NOT NULL,
+	phoneNum VARCHAR(12) NOT NULL,
+	email VARCHAR(30) NOT NULL,
+    city VARCHAR(25) NOT NULL,
+    state CHAR(2) NOT NULL
+);
+DESCRIBE Volunteer;
+
+    -- bridge table for many to many relationship
+CREATE TABLE IF NOT EXISTS Nonprofit_Volunteer (
+	nonprofitID INT NOT NULL,
+	volunteerID INT NOT NULL,
+	PRIMARY KEY PK_NonprofitVolunteer (nonprofitID, volunteerID),
+    CONSTRAINT FK_NonprofitVolunteer_Nonprofit
+    	FOREIGN KEY (nonprofitID)
+    	REFERENCES Nonprofit(nonprofitID),
+	CONSTRAINT fk_roomReservation_Volunteer 
+    	FOREIGN KEY (volunteerID)
+    	REFERENCES Volunteer(volunteerID)
+);
+
+CREATE TABLE IF NOT EXISTS skill (
+	skillID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	title VARCHAR(50) NOT NULL,
+	additionalInfo VARCHAR(255),
+    volunteerID INT, -- Adding a foreign key column
+    FOREIGN KEY (volunteerID) REFERENCES Volunteer(volunteerID)
+);
+
 CREATE TABLE IF NOT EXISTS Assignment (
 	assignmentID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	title VARCHAR(100) NOT NULL,
@@ -31,20 +57,6 @@ CREATE TABLE IF NOT EXISTS Assignment (
 	FOREIGN KEY (nonprofitID) REFERENCES Nonprofit(nonprofitID)
 );
 DESCRIBE Assignment;
-  
-CREATE TABLE IF NOT EXISTS Volunteer (
-	volunteerID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	firstName VARCHAR(20) NOT NULL,
-	lastName VARCHAR(30) NOT NULL,
-	phoneNum VARCHAR(12) NOT NULL,
-	email VARCHAR(30) NOT NULL,
-    city VARCHAR(25) NOT NULL,
-    state CHAR(2) NOT NULL,
-    skillID int NOT NULL,
-    timesheetID int,
-    FOREIGN KEY (skillID) REFERENCES skill(skillID)
-);
-DESCRIBE Volunteer;
 
 CREATE TABLE IF NOT EXISTS Timesheet (
 	timesheetID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -57,17 +69,7 @@ CREATE TABLE IF NOT EXISTS Timesheet (
   );
   DESCRIBE Timesheet;
 
-ALTER TABLE Volunteer
-	ADD CONSTRAINT
-    FOREIGN KEY FK_Timesheet_Volunteer(timesheetID)
-    REFERENCES Timesheet (timesheetID);
 
-  -- bridge table for many to many relationship
-CREATE TABLE IF NOT EXISTS Nonprofit_Volunteer (
-	nonprofitID INT NOT NULL,
-	volunteerID INT NOT NULL,
-	PRIMARY KEY pk_NonprofitVolunteer (nonprofitID, volunteerID)
-);
 
 USE volunteerManagementSystem;
 SELECT * FROM assignment;

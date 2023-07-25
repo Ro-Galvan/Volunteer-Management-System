@@ -13,8 +13,9 @@ public class Volunteer {
     private String state;
 
 //    FK associations- one-to-many relationships- use composition to place an object inside another object
-    private Skill skill;
-    private Timesheet timesheet;
+//    TODO Suggestion by Jenna to have it as a list since a Volunteer can have many skills -- I had it as a regular object before and this was before I moved the relationship around
+//    private List<Skill> skill;
+//    private Timesheet timesheet;
 
     public Volunteer() {
     }
@@ -85,22 +86,6 @@ public class Volunteer {
         this.state = state;
     }
 
-    public Skill getSkill() {
-        return skill;
-    }
-
-    public void setSkill(Skill skill) {
-        this.skill = skill;
-    }
-
-    public Timesheet getTimesheet() {
-        return timesheet;
-    }
-
-    public void setTimesheet(Timesheet timesheet) {
-        this.timesheet = timesheet;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,9 +100,7 @@ public class Volunteer {
             return false;
         if (!Objects.equals(email, volunteer.email)) return false;
         if (!Objects.equals(city, volunteer.city)) return false;
-        if (!Objects.equals(state, volunteer.state)) return false;
-        if (!Objects.equals(skill, volunteer.skill)) return false;
-        return Objects.equals(timesheet, volunteer.timesheet);
+        return Objects.equals(state, volunteer.state);
     }
 
     @Override
@@ -129,8 +112,6 @@ public class Volunteer {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + (skill != null ? skill.hashCode() : 0);
-        result = 31 * result + (timesheet != null ? timesheet.hashCode() : 0);
         return result;
     }
 
@@ -144,8 +125,6 @@ public class Volunteer {
                 ", email='" + email + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
-                ", skill=" + skill +
-                ", timesheet=" + timesheet +
                 '}';
     }
 }

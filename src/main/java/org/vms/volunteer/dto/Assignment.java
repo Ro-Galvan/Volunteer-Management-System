@@ -3,11 +3,13 @@ package org.vms.volunteer.dto;
 import java.time.LocalDate;
 import java.util.Objects;
 
+//TODO One assignment can have multiple timesheets (one-to-many relationship)
 public class Assignment {
     private int id;
     private String title;
     private String additionalInfo;
     private LocalDate date; //TODO MYSQL Format: YYYY-MM-DD
+
 //    FK association-one-to-many relationships-use composition to place an object inside another object
     private Nonprofit nonprofit;
 

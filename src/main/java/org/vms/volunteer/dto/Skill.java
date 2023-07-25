@@ -6,6 +6,8 @@ public class Skill {
     private int id;
     private String title;
     private String additionalInfo;
+    //    FK associations- one-to-many relationships- use composition to place an object inside another object
+    private Volunteer volunteer;
 
     public Skill() {
     }
@@ -42,7 +44,15 @@ public class Skill {
         this.additionalInfo = additionalInfo;
     }
 
-//    equals and hashcode to help compare 2 objects
+    public Volunteer getVolunteer() {
+        return volunteer;
+    }
+
+    public void setVolunteer(Volunteer volunteer) {
+        this.volunteer = volunteer;
+    }
+
+    //    equals and hashcode to help compare 2 objects
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,7 +62,9 @@ public class Skill {
 
         if (id != skill.id) return false;
         if (!Objects.equals(title, skill.title)) return false;
-        return Objects.equals(additionalInfo, skill.additionalInfo);
+        if (!Objects.equals(additionalInfo, skill.additionalInfo))
+            return false;
+        return Objects.equals(volunteer, skill.volunteer);
     }
 
     @Override
@@ -60,8 +72,10 @@ public class Skill {
         int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (additionalInfo != null ? additionalInfo.hashCode() : 0);
+        result = 31 * result + (volunteer != null ? volunteer.hashCode() : 0);
         return result;
     }
+
 
 //    to string to help with testing
     @Override
@@ -70,6 +84,7 @@ public class Skill {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", additionalInfo='" + additionalInfo + '\'' +
+                ", volunteer=" + volunteer +
                 '}';
     }
 }
