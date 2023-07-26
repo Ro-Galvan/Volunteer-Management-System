@@ -61,7 +61,7 @@ public class VolunteerDaoDB implements VolunteerDao{
     public void updateVolunteer(Volunteer volunteer) {
         // Executes a SQL UPDATE statement to update the volunteer in the "volunteer" table.
         final String SQL = "UPDATE volunteer SET firstName = ?, lastName = ?, phoneNum = ?, email = ?, city = ?, state = ? "
-                + "WHERE PowerPK = ?";
+                + "WHERE volunteerID = ?";
         // Uses the Volunteer variables (from getters) from the provided volunteer object as parameters for the UPDATE statement.
         jdbc.update(SQL,
                 volunteer.getFirstName(),

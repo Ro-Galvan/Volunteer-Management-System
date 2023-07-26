@@ -11,7 +11,6 @@
     <title>Volunteer Management System</title>
 </head>
 <body>
-<!-- Main Body of Page -->
 <div class="container">
     <div class="row m-4">
         <div class="col text-center border border-dark">
@@ -40,27 +39,30 @@
     <!--   *********** Form *********** -->
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Volunteer</span>
+            <span class="h3">Edit Volunteer</span>
         </div>
         <div class="col-7 text-center m-3">
             <!--           action is the edit method name in controller-->
-            <form action="addVolunteer" method="POST">
+            <form action="editVolunteer" method="POST">
                 <!--                firstName-->
                 <div class="form-group row">
                     <label for="firstName" class="col-3 col-form-label">
                         First Name</label>
                     <div class="col-9">
+<!--             th:value NEEDS TO BE ADDED FOR EACH FIELD-->
                         <input type="text" name="firstName"
-                               id="firstName" class="form-control"/>
+                               id="firstName" class="form-control"
+                               th:value="${volunteer.firstName}"/>
                     </div>
                 </div>
-        <!--                  lastName  -->
+                <!--                  lastName  -->
                 <div class="form-group row">
                     <label for="lastName" class="col-3 col-form-label">
                         Last Name</label>
                     <div class="col-9">
                         <input type="text" name="lastName"
-                               id="lastName" class="form-control"/>
+                               id="lastName" class="form-control"
+                               th:value="${volunteer.lastName}"/>
                     </div>
                 </div>
                 <!--                  phoneNumber  -->
@@ -69,7 +71,8 @@
                         Phone Number:</label>
                     <div class="col-9">
                         <input type="text" name="phoneNumber"
-                               id="phoneNumber" class="form-control"/>
+                               id="phoneNumber" class="form-control"
+                               th:value="${volunteer.phoneNumber}"/>
                     </div>
                 </div>
                 <!--                  email  -->
@@ -78,7 +81,8 @@
                         Email:</label>
                     <div class="col-9">
                         <input type="text" name="email"
-                               id="email" class="form-control"/>
+                               id="email" class="form-control"
+                               th:value="${volunteer.email}"/>
                     </div>
                 </div>
                 <!--                  city  -->
@@ -87,7 +91,8 @@
                         City:</label>
                     <div class="col-9">
                         <input type="text" name="city"
-                               id="city" class="form-control"/>
+                               id="city" class="form-control"
+                               th:value="${volunteer.city}"/>
                     </div>
                 </div>
 
@@ -97,50 +102,16 @@
                         State:</label>
                     <div class="col-9">
                         <input type="text" name="state"
-                               id="state" class="form-control"/>
+                               id="state" class="form-control"
+                               th:value="${volunteer.state}"/>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add Volunteer</button>
+                <input type="hidden" name="id" th:value="${volunteer.id}"/>
+                <button type="submit" class="btn btn-primary">Update Volunteer</button>
             </form>
         </div>
     </div>
-
-    <!--    *********** Table *********** -->
-    <div class="row m-4 border border-dark">
-        <div class="col text-center m-3">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="volunteer : ${volunteers}">
-                    <td th:text="${volunteer.id}">Volunteer ID</td>
-                    <td th:text='${volunteer.firstName}'>Volunteer First Name</td>
-                    <td th:text='${volunteer.lastName}'>Volunteer Last Name</td>
-                    <td th:text='${volunteer.phoneNumber}'>Volunteer Phone Number</td>
-                    <td th:text='${volunteer.email}'>Volunteer Email</td>
-                    <td th:text='${volunteer.city}'>Volunteer City</td>
-                    <td th:text='${volunteer.state}'>Volunteer State</td>
-<!--                    <td><a href="#" th:href="@{/volunteerDetail(id=${volunteer.id})}">Details</a></td>-->
-                    <td><a href="#" th:href="@{/editVolunteer(id=${volunteer.id})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteVolunteer(id=${volunteer.id})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
 </div>
 <!-- End main body -->
 

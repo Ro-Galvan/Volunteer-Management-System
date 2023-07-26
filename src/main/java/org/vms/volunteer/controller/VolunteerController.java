@@ -3,6 +3,7 @@ package org.vms.volunteer.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.vms.volunteer.dto.Volunteer;
@@ -57,6 +58,23 @@ public class VolunteerController {
 
         return "redirect:/volunteers";
     }
-//    ****ALTERNATE WAY TO DO IT*****
+    //              **************EDIT Volunteer*************
+    @GetMapping("editVolunteer")
+    public String editVolunteer(Integer id, Model model) {
+        Volunteer volunteer = volunteerService.getVolunteerByID(id);
+        model.addAttribute("volunteer", volunteer);
+        return "editVolunteer";
+    }
+    @PostMapping("editVolunteer")
+    public String performEditVolunteer(Volunteer volunteer) {
+        volunteerService.updateVolunteer(volunteer);
+        return "redirect:/volunteers";
+    }
+
+    @GetMapping("deleteVolunteer")
+    public String deleteVolunteer(Integer id) {
+        volunteerService.deleteVolunteerByID(id);
+        return "redirect:/volunteers";
+    }
 
 }
