@@ -93,7 +93,7 @@ public class VolunteerDaoDB implements VolunteerDao{
         final String SQL = "SELECT v.volunteerID, v.firstName, v.lastName, v.phoneNum, v.email, v.city, v.state, s.skillID, s.title AS skillTitle, s.additionalInfo " +
                 "FROM Volunteer v " +
                 "LEFT JOIN Skill s ON v.volunteerID = s.volunteerID " +
-                "WHERE v.volunteerID = ?;";
+                "WHERE s.skillID = ?;";
         return jdbc.query(SQL, new VolunteerMapper(), skill.getId());
     }
 
