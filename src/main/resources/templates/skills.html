@@ -40,66 +40,49 @@
     <!--   *********** Form *********** -->
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Volunteer</span>
+            <span class="h3">Add Skill</span>
         </div>
         <div class="col-7 text-center m-3">
-            <!--           action is the add method name in controller-->
-            <form action="addVolunteer" method="POST">
-                <!--                firstName-->
+     <!--      action is the add method name in controller-->
+            <form action="addSkill" method="POST">
+<!--                                title-->
                 <div class="form-group row">
-                    <label for="firstName" class="col-3 col-form-label">
-                        First Name</label>
+                    <label for="title" class="col-3 col-form-label">
+                        Title:</label>
                     <div class="col-9">
-                        <input type="text" name="firstName"
-                               id="firstName" class="form-control"/>
-                    </div>
-                </div>
-        <!--                  lastName  -->
-                <div class="form-group row">
-                    <label for="lastName" class="col-3 col-form-label">
-                        Last Name</label>
-                    <div class="col-9">
-                        <input type="text" name="lastName"
-                               id="lastName" class="form-control"/>
-                    </div>
-                </div>
-                <!--                  phoneNumber  -->
-                <div class="form-group row">
-                    <label for="phoneNumber" class="col-3 col-form-label">
-                        Phone Number:</label>
-                    <div class="col-9">
-                        <input type="text" name="phoneNumber"
-                               id="phoneNumber" class="form-control"/>
-                    </div>
-                </div>
-                <!--                  email  -->
-                <div class="form-group row">
-                    <label for="email" class="col-3 col-form-label">
-                        Email:</label>
-                    <div class="col-9">
-                        <input type="text" name="email"
-                               id="email" class="form-control"/>
-                    </div>
-                </div>
-                <!--                  city  -->
-                <div class="form-group row">
-                    <label for="city" class="col-3 col-form-label">
-                        City:</label>
-                    <div class="col-9">
-                        <input type="text" name="city"
-                               id="city" class="form-control"/>
+                        <input type="text" name="title"
+                               id="title" class="form-control"/>
                     </div>
                 </div>
 
-                <!--                  state  -->
+                <!--                  additionalInfo  -->
                 <div class="form-group row">
-                    <label for="state" class="col-3 col-form-label">
-                        State:</label>
+                    <label for="additionalInfo" class="col-3 col-form-label">
+                        Additional Info:</label>
                     <div class="col-9">
-                        <input type="text" name="state"
-                               id="state" class="form-control"/>
+                        <input type="text" name="additionalInfo"
+                               id="additionalInfo" class="form-control"/>
                     </div>
                 </div>
+
+                <!--                  volunteer  -->
+                <div class="form-group row">
+                    <label for="volunteer" class="col-3 col-form-label">
+                        Volunteer who has this skill:</label>
+                    <div class="col-9">
+<!--                        volunteerId is coming from addSkill param in controller-->
+                        <select id="volunteer" name="volunteerId" class="form-control" >
+                            <option disabled selected value="">-- Select Volunteer Name to link skill </option>
+                            <option th:each="volunteer : ${volunteers}"
+                                    th:value="${volunteer.id}"
+                                    th:text="${volunteer.firstName + ' '
+                                            + volunteer.lastName}">
+<!--                                    th:text="${volunteer.firstName}">-->
+                                </option>
+                        </select>
+                    </div>
+                </div>
+
 
                 <button type="submit" class="btn btn-primary">Add Volunteer</button>
             </form>
@@ -112,29 +95,24 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>City</th>
-                    <th>State</th>
+                    <th>Skill ID</th>
+                    <th>Skill Title</th>
+                    <th>Additional Info</th>
+                    <th>Volunteer Who has this skill</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="volunteer : ${volunteers}">
-                    <td th:text="${volunteer.id}">Volunteer ID</td>
-                    <td th:text='${volunteer.firstName}'>Volunteer First Name</td>
-                    <td th:text='${volunteer.lastName}'>Volunteer Last Name</td>
-                    <td th:text='${volunteer.phoneNumber}'>Volunteer Phone Number</td>
-                    <td th:text='${volunteer.email}'>Volunteer Email</td>
-                    <td th:text='${volunteer.city}'>Volunteer City</td>
-                    <td th:text='${volunteer.state}'>Volunteer State</td>
-<!--                    <td><a href="#" th:href="@{/volunteerDetail(id=${volunteer.id})}">Details</a></td>-->
-                    <td><a href="#" th:href="@{/editVolunteer(id=${volunteer.id})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteVolunteer(id=${volunteer.id})}">Delete</a></td>
+                <tr th:each="skill : ${skills}">
+                    <td th:text="${skill.id}">Skill ID</td>
+                    <td th:text="${skill.title}">Skill Title</td>
+                    <td th:text="${skill.additionalInfo}">Additional Info</td>
+<!--                    <td th:text="${skill.volunteer.firstName}">Volunteer Who has this skill</td>-->
+<!--                    <td th:text="${skill.volunteer != null ? skill.volunteer.firstName : 'N/A'}">Volunteer Who has this skill</td>-->
+                    <td th:text="${skill.volunteer != null ? skill.volunteer.firstName + ' ' + skill.volunteer.lastName : 'N/A'}">Volunteer Who has this skill</td>
+                    <td><a href="#" th:href="@{/editSkill(id=${skill.id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteSkill(id=${skill.id})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
