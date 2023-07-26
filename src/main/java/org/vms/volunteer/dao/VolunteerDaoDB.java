@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.vms.volunteer.dto.Nonprofit;
 import org.vms.volunteer.dto.Skill;
 import org.vms.volunteer.dto.Timesheet;
@@ -18,6 +19,7 @@ public class VolunteerDaoDB implements VolunteerDao{
     JdbcTemplate jdbc;
 
     @Override
+    @Transactional
     public Volunteer addVolunteer(Volunteer volunteer) {
         //executes the SQL statement to insert new volunteer, using provided values from the Volunteer object
         final String SQL = "INSERT INTO volunteer(firstName, lastName, phoneNum, email, city, state) " + "VALUES(?,?,?,?,?,?)";
@@ -72,6 +74,7 @@ public class VolunteerDaoDB implements VolunteerDao{
     }
 
     @Override
+    @Transactional
     public void deleteVolunteerByID(int id) {
         // Delete from ALL 3 associated FK tables before deleting from Volunteer table.
 //        1. DELETE FROM Nonprofit_Volunteer
@@ -93,7 +96,7 @@ public class VolunteerDaoDB implements VolunteerDao{
         final String SQL = "SELECT v.volunteerID, v.firstName, v.lastName, v.phoneNum, v.email, v.city, v.state, s.skillID, s.title AS skillTitle, s.additionalInfo " +
                 "FROM Volunteer v " +
                 "LEFT JOIN Skill s ON v.volunteerID = s.volunteerID " +
-                "WHERE s.skillID = ?;";
+                "WHERE v.volunteerID = 3;";
         return jdbc.query(SQL, new VolunteerMapper(), skill.getId());
     }
 
