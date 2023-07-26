@@ -21,6 +21,6 @@ public interface VolunteerDao {
 //    TODO figure out what the page will look like, the below  is what search options you could have
 //     not sure if I need all of them
 //    like in sighting some were used for special features to search
-    List<Volunteer> getVolunteersByNonprofit(Nonprofit nonprofit);
-    List<Volunteer> getVolunteersByTimesheet(Timesheet timesheet);
+//    List<Volunteer> getVolunteersByNonprofit(Nonprofit nonprofit);
+//    List<Volunteer> getVolunteersByTimesheet(Timesheet timesheet);
 }
