@@ -14,6 +14,6 @@ public interface TimesheetDao {
     void deleteTimesheetByID(int id);
 
 
-    List<Timesheet> getTimesheetByVolunteer();
-    List<Timesheet> getTimesheetByAssignment();
+//    List<Timesheet> getTimesheetByVolunteer();
+//    List<Timesheet> getTimesheetByAssignment();
 }

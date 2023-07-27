@@ -31,15 +31,15 @@ INSERT INTO Volunteer (firstName, lastName, phoneNum, email, city, state) VALUES
     -- Inserting data into the `skill` table
 INSERT INTO Skill (title, additionalInfo, volunteerID) VALUES
     ('Web Development', 'Experience in building websites using HTML, CSS, and JavaScript', 1),
-    ('Database Management', 'Knowledge of SQL and database design', 2),
-    ('Social Media Marketing', 'Experience in managing social media accounts and running ad campaigns', 3),
-    ('Graphic Design', 'Proficiency in Adobe Photoshop and Illustrator', 4),
-    ('Fundraising', 'Experience in organizing fundraising events and campaigns', 5),
-    ('Event Planning', 'Skills in coordinating and planning events', 6),
-    ('Data Analysis', 'Ability to analyze and interpret data using tools like Excel or Python', 7),
-    ('Public Speaking', 'Confident in delivering presentations and speaking in public', 8),
-    ('Grant Writing', 'Experience in writing grant proposals for funding opportunities', 9),
-    ('Volunteer Coordination', 'Skills in managing and coordinating volunteer activities', 10);
+    ('Database Management', 'Knowledge of SQL and database design', 5),
+    ('Social Media Marketing', 'Experience in managing social media accounts and running ad campaigns', 9),
+    ('Graphic Design', 'Proficiency in Adobe Photoshop and Illustrator', 1),
+    ('Fundraising', 'Experience in organizing fundraising events and campaigns', 2),
+    ('Event Planning', 'Skills in coordinating and planning events', 3),
+    ('Data Analysis', 'Ability to analyze and interpret data using tools like Excel or Python', 7);
+--    ('Public Speaking', 'Confident in delivering presentations and speaking in public', 8),
+--    ('Grant Writing', 'Experience in writing grant proposals for funding opportunities', 9),
+--    ('Volunteer Coordination', 'Skills in managing and coordinating volunteer activities', 10);
 
 -- Inserting data into the `Timesheet` table
 INSERT INTO Timesheet (hoursLogged, `date`, volunteerID, assignmentID) VALUES
