@@ -108,8 +108,7 @@
                     <td th:text="${skill.id}">Skill ID</td>
                     <td th:text="${skill.title}">Skill Title</td>
                     <td th:text="${skill.additionalInfo}">Additional Info</td>
-<!--                    <td th:text="${skill.volunteer.firstName}">Volunteer Who has this skill</td>-->
-<!--                    <td th:text="${skill.volunteer != null ? skill.volunteer.firstName : 'N/A'}">Volunteer Who has this skill</td>-->
+<!--                    <td th:text="${skill.volunteer.firstName + ' ' + skill.volunteer.lastName}">Volunteer Who has this skill</td>-->
                     <td th:text="${skill.volunteer != null ? skill.volunteer.firstName + ' ' + skill.volunteer.lastName : 'N/A'}">Volunteer Who has this skill</td>
                     <td><a href="#" th:href="@{/editSkill(id=${skill.id})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteSkill(id=${skill.id})}">Delete</a></td>

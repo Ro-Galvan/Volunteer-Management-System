@@ -40,7 +40,9 @@ public class SkillDaoDB implements SkillDao{
     private Volunteer getVolunteerForSkill(int volunteerId) {
         try{
 //            TODO I have a similar SQL statement in Volunteer as a bonus method-not sure if that one is needed anymore
-            final String SELECT_VOLUNTEER_FOR_SKILL = "v.firstName, v.lastName, v.city, v.state, s.title AS skillTitle, s.additionalInfo " +
+//            final String SELECT_VOLUNTEER_FOR_SKILL = "SELECT s.*, v.firstName, v.lastName FROM skill s " +
+//                    "LEFT JOIN volunteer v ON s.volunteerID = v.volunteerID;";
+            final String SELECT_VOLUNTEER_FOR_SKILL = "SELECT v.firstName, v.lastName, v.city, v.state, s.title AS skillTitle, s.additionalInfo " +
                     "FROM Volunteer v " +
                     "LEFT JOIN Skill s ON v.volunteerID = s.volunteerID " +
                     "WHERE v.volunteerID = ?;";
@@ -74,16 +76,40 @@ public class SkillDaoDB implements SkillDao{
         }
     }
 
+//    TODO original one I had but doesn't work correctly in displaying the name of volunteer on front end
+// Below method fetches the skills from the database and then separately fetches the volunteer for each skill using
+// the getVolunteerForSkill(skill.getId()) method.
+//    @Override
+//    public List<Skill> getAllSkills() {
+//        try{
+//            final String sql = "SELECT * FROM skill";
+//            List<Skill> list = jdbc.query(sql, new SkillMapper());
+//
+//
+//            for (Skill skill : list){
+//                skill.setVolunteer(getVolunteerForSkill(skill.getId()));
+//            }
+//            return list;
+//        } catch (DataAccessException ex) {
+//            return null;
+//        }
+//    }
+
+    // more efficient to fetch the volunteer information along with the skills in a single query using a join
     @Override
     public List<Skill> getAllSkills() {
-        try{
-            final String sql = "SELECT * FROM skill";
+        try {
+            // LEFT JOIN SQL query between the skill and volunteer tables on  foreign key column volunteerID
+            //will include all skills, even if they don't have a corresponding volunteer because of left join
+            //TODO need to update query to inner join once I update table to make volunteerID not null
+            /*SELECT s.*, v.firstName, v.lastName FROM skill s INNER JOIN volunteer v ON s.volunteerID = v.volunteerID
+            With an INNER JOIN, only the skills that have a matching volunteerID in the volunteer table will be included in the result set. Skills without a corresponding volunteer will not be included in the result.
+             */
+            final String sql = "SELECT s.*, v.firstName, v.lastName FROM skill s " +
+                    "LEFT JOIN volunteer v ON s.volunteerID = v.volunteerID";
+
             List<Skill> list = jdbc.query(sql, new SkillMapper());
 
-
-            for (Skill skill : list){
-                skill.setVolunteer(getVolunteerForSkill(skill.getId()));
-            }
             return list;
         } catch (DataAccessException ex) {
             return null;
@@ -95,17 +121,19 @@ public class SkillDaoDB implements SkillDao{
     @Override
     public void updateSkill(Skill skill) {
         final String UPDATE_SKILL = "UPDATE skill SET title = ?, additionalInfo = ?, volunteerID = ? "
-                + "WHERE id = ?";
+                + "WHERE skillID = ?";
         jdbc.update(UPDATE_SKILL,
                 skill.getTitle(),
                 skill.getAdditionalInfo(),
                 skill.getVolunteer().getId(),
+//                skill.getVolunteer().getFirstName(),
+//                skill.getVolunteer().getLastName(),
                 skill.getId());
     }
 
     @Override
     public void deleteSkillByID(int id) {
-        final String DELETE_SKILL = "DELETE FROM skill WHERE id = ?";
+        final String DELETE_SKILL = "DELETE FROM skill WHERE skillID = ?";
         jdbc.update(DELETE_SKILL, id);
     }
 

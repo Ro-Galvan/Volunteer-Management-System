@@ -26,12 +26,14 @@ public class SkillController {
     public String displayVolunteers(Model model) {
         List<Skill> skills = skillService.getAllSkills();
         List<Volunteer> volunteers = volunteerService.getAllVolunteers();
+//        System.out.println(volunteers);
         model.addAttribute("skills", skills);
+//        model.addAttribute("skills", new Skill());
         model.addAttribute("volunteers", volunteers);
         return "skills";
     }
 
-    //              **************ADD skill*************
+    //              **************ADD skill-------------------This way did not work*************
 //    @PostMapping("addSkill")
 //    public String addSkill(Skill skill, HttpServletRequest request) {
 ////        getting volunteerID
@@ -49,17 +51,25 @@ public class SkillController {
         String volunteerId = request.getParameter("volunteerId");
 
 
-//        take in a Hero object that captures the name, type, description fields and an HttpServletRequest object that we use to capture those fields
+//        take in a skill object that captures the title, additionalInfo, volunteerId fields and an HttpServletRequest object that we use to capture those fields
         Skill skill = new Skill();
         skill.setTitle(request.getParameter("title"));
         skill.setAdditionalInfo(request.getParameter("additionalInfo"));
-//      setting volunteer using volunteerService TODO should I be using getVolunteerBySkill here??
+//      setting volunteer using volunteerService
+        //TODO this will cause an error if volunteer associated with skill is left null
         skill.setVolunteer(volunteerService.getVolunteerByID(Integer.parseInt(volunteerId)));
+
 
         model.addAttribute("skill", skill);
 
         skillService.addSkill(skill);
 
+        return "redirect:/skills";
+    }
+
+    @GetMapping("deleteSkill")
+    public String deleteSkill(Integer id) {
+        skillService.deleteSkillByID(id);
         return "redirect:/skills";
     }
 
