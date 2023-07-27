@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Volunteer Management System</title>
+</head>
+<body>
+<!-- Main Body of Page -->
+<div class="container">
+    <div class="row m-4">
+        <div class="col text-center border border-dark">
+            <h1><a href="/" class="text-dark">Volunteer Management System</a></h1>
+        </div>
+    </div>
+    <!--    *********** menu *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <a href="volunteers" class="btn btn-outline-primary btn-lg">Volunteer</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="nonprofits" class="btn btn-outline-primary btn-lg">Nonprofit</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="assignments" class="btn btn-outline-primary btn-lg">Assignment</a>
+        </div>
+
+        <div class="col text-center m-3">
+            <a href="skills" class="btn btn-outline-primary btn-lg">Skill</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="timesheets" class="btn btn-outline-primary btn-lg">Timesheet</a>
+        </div>
+    </div>
+    <!--   *********** Form *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Add Nonprofit</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <!--      action is the add method name in controller-->
+            <form action="addNonprofit" method="POST">
+                <!--                     companyName-->
+                <div class="form-group row">
+                    <label for="companyName" class="col-3 col-form-label">
+                        Nonprofit Name:</label>
+                    <div class="col-9">
+                        <input type="text" name="companyName"
+                               id="companyName" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--                  phoneNumber  -->
+                <div class="form-group row">
+                    <label for="phoneNumber" class="col-3 col-form-label">
+                        Phone Number:</label>
+                    <div class="col-9">
+                        <input type="text" name="phoneNumber"
+                               id="phoneNumber" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--                  email  -->
+                <div class="form-group row">
+                    <label for="email" class="col-3 col-form-label">
+                        Email:</label>
+                    <div class="col-9">
+                        <input type="text" name="email"
+                               id="email" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--                  address  -->
+                <div class="form-group row">
+                    <label for="address" class="col-3 col-form-label">
+                        Address:</label>
+                    <div class="col-9">
+                        <input type="text" name="address"
+                               id="address" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--                  mission  -->
+                <div class="form-group row">
+                    <label for="mission" class="col-3 col-form-label">
+                        Mission:</label>
+                    <div class="col-9">
+                        <input type="text" name="mission"
+                               id="mission" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--    Multi select drop down for volunteer selection  -->
+                <div class="form-group row">
+                    <label for="volunteerID" class="col-3 col-form-label">
+                        Volunteers:</label>
+                    <div class="col-9">
+                        <select id="volunteerID" name="volunteerID" class="form-control" multiple>
+                            <option th:each="volunteer : ${volunteers}"
+                                    th:value="${volunteer.id}"
+                                    th:text="${volunteer.firstName + ' ' + volunteer.lastName}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Nonprofit</button>
+            </form>
+        </div>
+    </div>
+
+    <!--    *********** Table *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nonprofit Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Mission</th>
+<!--                    <th>Volunteers</th>-->
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="nonprofit : ${nonprofits}">
+                    <td th:text="${nonprofit.companyName}">Nonprofit Name</td>
+                    <td th:text="${nonprofit.phoneNumber}">Phone Number</td>
+                    <td th:text="${nonprofit.email}">Email</td>
+                    <td th:text="${nonprofit.address}">Address</td>
+                    <td th:text="${nonprofit.mission}">Mission</td>
+<!--                    <td th:text="${nonprofit.volunteers}">Volunteers</td>-->
+                    <td><a href="#" th:href="@{/editNonprofit(id=${nonprofit.id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteNonprofit(id=${nonprofit.id})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- End main body -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

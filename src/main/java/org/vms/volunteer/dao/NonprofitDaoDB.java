@@ -20,7 +20,7 @@ public class NonprofitDaoDB implements NonprofitDao{
 
     @Override
     public Nonprofit addNonprofit(Nonprofit nonprofit) {
-        final String SQL = "INSERT INTO nonprofit(companyName, phoneNum, email, address, mission)";
+        final String SQL = "INSERT INTO nonprofit(companyName, phoneNum, email, address, mission) VALUES(?,?,?,?,?)";
         jdbc.update(SQL,
                 nonprofit.getCompanyName(),
                 nonprofit.getPhoneNumber(),
