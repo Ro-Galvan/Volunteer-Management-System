@@ -17,7 +17,7 @@ public interface NonprofitDao {
 
 //    needed for the many-to-many relationship that Nonprofit is managing
 //    TODO more so needed for testing at least it was only used in hero like that
-    List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer);
+//    List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer);
 
 //    extra method to show the nonprofits by assignments ON THE Assignment DETAILS PAGE:
 //    List<Nonprofit> getNonprofitsByAssignment(Assignment assignment);

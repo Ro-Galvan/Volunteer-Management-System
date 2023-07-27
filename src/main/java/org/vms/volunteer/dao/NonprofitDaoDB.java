@@ -131,10 +131,10 @@ via/ON the nonprofit_volunteer table.
 
 
 //    TODO I believe this method is needed for testing later not for frontend
-    @Override
-    public List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer) {
-        return null;
-    }
+//    @Override
+//    public List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer) {
+//        return null;
+//    }
 
 //    @Override
 //    public List<Nonprofit> getNonprofitsByAssignment(Assignment assignment) {
