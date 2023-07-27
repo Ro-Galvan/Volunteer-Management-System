@@ -23,7 +23,7 @@ public class SkillController {
     VolunteerService volunteerService;
 
     @GetMapping("skills")
-    public String displayVolunteers(Model model) {
+    public String displaySkills(Model model) {
         List<Skill> skills = skillService.getAllSkills();
         List<Volunteer> volunteers = volunteerService.getAllVolunteers();
 //        System.out.println(volunteers);
