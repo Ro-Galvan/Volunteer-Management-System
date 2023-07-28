@@ -12,5 +12,5 @@ public interface VolunteerService {
     void updateVolunteer(Volunteer volunteer);
     void deleteVolunteerByID(int id);
     //    TODO- not sure how this method will be used on front end
-    List<Volunteer> getVolunteersBySkill(Skill skill);
+//    List<Volunteer> getVolunteersBySkill(Skill skill);
 }

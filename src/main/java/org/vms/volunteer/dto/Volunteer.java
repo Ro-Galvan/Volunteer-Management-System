@@ -12,9 +12,8 @@ public class Volunteer {
     private String city;
     private String state;
 
-//    FK associations- one-to-many relationships- use composition to place an object inside another object
-//    TODO Suggestion by Jenna to have it as a list since a Volunteer can have many skills -- I had it as a regular object before and this was before I moved the relationship around
-//    private List<Skill> skill;
+// managing the many-to-many relationship on the volunteer side
+    private List<Nonprofit> nonprofits;
 
     public Volunteer() {
     }
@@ -85,14 +84,13 @@ public class Volunteer {
         this.state = state;
     }
 
-//    public List<Skill> getSkill() {
-//        return skill;
-//    }
-//
-//    public void setSkill(List<Skill> skill) {
-//        this.skill = skill;
-//    }
+    public List<Nonprofit> getNonprofits() {
+        return nonprofits;
+    }
 
+    public void setNonprofits(List<Nonprofit> nonprofits) {
+        this.nonprofits = nonprofits;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -108,7 +106,8 @@ public class Volunteer {
             return false;
         if (!Objects.equals(email, volunteer.email)) return false;
         if (!Objects.equals(city, volunteer.city)) return false;
-        return Objects.equals(state, volunteer.state);
+        if (!Objects.equals(state, volunteer.state)) return false;
+        return Objects.equals(nonprofits, volunteer.nonprofits);
     }
 
     @Override
@@ -120,6 +119,7 @@ public class Volunteer {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (nonprofits != null ? nonprofits.hashCode() : 0);
         return result;
     }
 
@@ -133,6 +133,7 @@ public class Volunteer {
                 ", email='" + email + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
+                ", nonprofits=" + nonprofits +
                 '}';
     }
 }

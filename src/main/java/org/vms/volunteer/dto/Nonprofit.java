@@ -10,15 +10,11 @@ public class Nonprofit {
     private String email;
     private String address;
     private String mission;
-    /* managing the many-to-many relationship on the Nonprofit side since it is more likely that
-    nonprofits will have more volunteers VS a volunteer that may only volunteer 1 time at 1 place */
-    private List<Volunteer> volunteers;
 
 //  constructors
     public Nonprofit() {
     }
 
-//    TODO do i need to add the list later - left off for now because a list as a param is messy
     public Nonprofit(int id, String companyName, String phoneNumber, String email, String address, String mission) {
         this.id = id;
         this.companyName = companyName;
@@ -77,15 +73,9 @@ public class Nonprofit {
         this.mission = mission;
     }
 
-    public List<Volunteer> getVolunteers() {
-        return volunteers;
-    }
-
-    public void setVolunteers(List<Volunteer> volunteers) {
-        this.volunteers = volunteers;
-    }
 
     //    equals & hashcode to compare 2 objects
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,8 +90,7 @@ public class Nonprofit {
             return false;
         if (!Objects.equals(email, nonprofit.email)) return false;
         if (!Objects.equals(address, nonprofit.address)) return false;
-        if (!Objects.equals(mission, nonprofit.mission)) return false;
-        return Objects.equals(volunteers, nonprofit.volunteers);
+        return Objects.equals(mission, nonprofit.mission);
     }
 
     @Override
@@ -112,7 +101,6 @@ public class Nonprofit {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (mission != null ? mission.hashCode() : 0);
-        result = 31 * result + (volunteers != null ? volunteers.hashCode() : 0);
         return result;
     }
 
@@ -127,7 +115,6 @@ public class Nonprofit {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", mission='" + mission + '\'' +
-                ", volunteers=" + volunteers +
                 '}';
     }
 }

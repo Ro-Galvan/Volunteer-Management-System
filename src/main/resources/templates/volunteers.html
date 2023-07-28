@@ -101,6 +101,20 @@
                     </div>
                 </div>
 
+                <!--    Multi select drop down for nonprofit selection  -->
+                <div class="form-group row">
+                    <label for="nonprofitID" class="col-3 col-form-label">
+                        Nonprofits:</label>
+                    <div class="col-9">
+                        <select id="nonprofitID" name="nonprofitID" class="form-control" multiple>
+                            <option th:each="nonprofit : ${nonprofits}"
+                                    th:value="${nonprofit.id}"
+                                    th:text="${nonprofit.companyName}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Add Volunteer</button>
             </form>
         </div>
@@ -119,6 +133,7 @@
                     <th>Email</th>
                     <th>City</th>
                     <th>State</th>
+<!--                    <th>Nonprofit</th>-->
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -132,6 +147,7 @@
                     <td th:text='${volunteer.email}'>Volunteer Email</td>
                     <td th:text='${volunteer.city}'>Volunteer City</td>
                     <td th:text='${volunteer.state}'>Volunteer State</td>
+<!--                    <td th:text='${volunteer.nonprofits}'>Nonprofit</td>-->
 <!--                    <td><a href="#" th:href="@{/volunteerDetail(id=${volunteer.id})}">Details</a></td>-->
                     <td><a href="#" th:href="@{/editVolunteer(id=${volunteer.id})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteVolunteer(id=${volunteer.id})}">Delete</a></td>

@@ -38,8 +38,8 @@ public class VolunteerServiceImpl implements VolunteerService{
         volunteerDao.deleteVolunteerByID(id);
     }
 
-    @Override
-    public List<Volunteer> getVolunteersBySkill(Skill skill) {
-        return volunteerDao.getVolunteersBySkill(skill);
-    }
+//    @Override
+//    public List<Volunteer> getVolunteersBySkill(Skill skill) {
+//        return volunteerDao.getVolunteersBySkill(skill);
+//    }
 }

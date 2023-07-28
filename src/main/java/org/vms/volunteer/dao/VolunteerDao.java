@@ -15,8 +15,13 @@ public interface VolunteerDao {
     List<Volunteer> getAllVolunteers();
     void updateVolunteer(Volunteer volunteer);
     void deleteVolunteerByID(int id);
-//    what to keep this one
-    List<Volunteer> getVolunteersBySkill(Skill skill);
+
+//    TODO do I need this?
+//    List<Volunteer> getVolunteersBySkill(Skill skill);
+
+    //    needed for the many-to-many relationship that Volunteer is managing
+//    TODO more so needed for testing at least it was only used in hero like that
+//    List<Volunteer> getVolunteersByNonprofits(Nonprofit nonprofit);
 
 //    TODO figure out what the page will look like, the below  is what search options you could have
 //     not sure if I need all of them
