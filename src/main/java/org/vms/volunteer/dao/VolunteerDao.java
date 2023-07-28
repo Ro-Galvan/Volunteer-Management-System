@@ -20,6 +20,7 @@ public interface VolunteerDao {
 //    List<Volunteer> getVolunteersBySkill(Skill skill);
 
     //    needed for the many-to-many relationship that Volunteer is managing
+
 //    TODO more so needed for testing at least it was only used in hero like that
 //    List<Volunteer> getVolunteersByNonprofits(Nonprofit nonprofit);
 

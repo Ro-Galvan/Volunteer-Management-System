@@ -63,6 +63,36 @@ public class AssignmentController {
 //  TODO need to add update
 
 
+//                  **************EDIT Assignment*************
+    @GetMapping("editAssignment")
+    public String editAssignment(Integer id, Model model) {
+//        get Assignment as well as the lists of nonprofits to display all of them for the Edit
+        Assignment assignment = assignmentService.getAssignmentByID(id);
+        List<Nonprofit> nonprofits = nonprofitService.getAllNonprofits();
+
+        //adds Assignment selected by ID object, nonprofits as an attribute to model to display to web
+        model.addAttribute("assignment", assignment);
+        model.addAttribute("nonprofits", nonprofits);
+
+        return "editAssignment";
+    }
+
+    @PostMapping("editAssignment")
+    public String performEditAssignment(Integer id, HttpServletRequest request) {
+        Assignment assignment = assignmentService.getAssignmentByID(id);
+//         pull out the nonprofitIDs data from the HttpServletRequest
+        String nonprofitIDs = request.getParameter("nonprofitID");
+
+        assignment.setTitle(request.getParameter("title"));
+        assignment.setAdditionalInfo(request.getParameter("additionalInfo"));
+        assignment.setDate(LocalDate.parse(request.getParameter("date")));
+        assignment.setNonprofit(nonprofitService.getNonprofitByID(Integer.parseInt(nonprofitIDs)));
+
+        assignmentService.updateAssignment(assignment);
+        return "redirect:/assignments";
+    }
+
+
     @GetMapping("deleteAssignment")
     public String deleteAssignment(Integer id) {
         assignmentService.deleteAssignmentByID(id);
