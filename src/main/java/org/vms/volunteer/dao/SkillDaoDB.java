@@ -104,8 +104,6 @@ public class SkillDaoDB implements SkillDao{
                 skill.getTitle(),
                 skill.getAdditionalInfo(),
                 skill.getVolunteer().getId(),
-//                skill.getVolunteer().getFirstName(),
-//                skill.getVolunteer().getLastName(),
                 skill.getId());
     }
 

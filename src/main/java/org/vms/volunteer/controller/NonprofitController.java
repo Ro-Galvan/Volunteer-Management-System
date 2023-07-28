@@ -48,4 +48,23 @@ public class NonprofitController {
         return "redirect:/nonprofits";
     }
 
+    //              **************EDIT Nonprofit*************
+    @GetMapping("editNonprofit")
+    public String editNonprofit(Integer id, Model model) {
+        Nonprofit nonprofit = nonprofitService.getNonprofitByID(id);
+        model.addAttribute("nonprofit", nonprofit);
+        return "editNonprofit";
+    }
+    @PostMapping("editNonprofit")
+    public String performEditNonprofit(Nonprofit nonprofit) {
+        nonprofitService.updateNonprofit(nonprofit);
+        return "redirect:/nonprofits";
+    }
+
+    //              **************DELETE Nonprofit*************
+    @GetMapping("deleteNonprofit")
+    public String deleteNonprofit(Integer id) {
+        nonprofitService.deleteNonprofitByID(id);
+        return "redirect:/nonprofits";
+    }
 }
