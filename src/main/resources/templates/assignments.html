@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Volunteer Management System</title>
+</head>
+<body>
+<!-- Main Body of Page -->
+<div class="container">
+    <div class="row m-4">
+        <div class="col text-center border border-dark">
+            <h1><a href="/" class="text-dark">Volunteer Management System</a></h1>
+        </div>
+    </div>
+    <!--    *********** menu *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <a href="volunteers" class="btn btn-outline-primary btn-lg">Volunteer</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="nonprofits" class="btn btn-outline-primary btn-lg">Nonprofit</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="assignments" class="btn btn-outline-primary btn-lg">Assignment</a>
+        </div>
+
+        <div class="col text-center m-3">
+            <a href="skills" class="btn btn-outline-primary btn-lg">Skill</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="timesheets" class="btn btn-outline-primary btn-lg">Timesheet</a>
+        </div>
+    </div>
+    <!--   *********** Form *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Add Assignment</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <!--      action is the add method name in controller-->
+            <form action="addAssignment" method="POST">
+                <!--                                title-->
+                <div class="form-group row">
+                    <label for="title" class="col-3 col-form-label">
+                        Title:</label>
+                    <div class="col-9">
+                        <input type="text" name="title"
+                               id="title" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--                  additionalInfo  -->
+                <div class="form-group row">
+                    <label for="additionalInfo" class="col-3 col-form-label">
+                        Additional Info:</label>
+                    <div class="col-9">
+                        <input type="text" name="additionalInfo"
+                               id="additionalInfo" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--                  date  -->
+                <div class="form-group row">
+                    <label for="date" class="col-3 col-form-label">
+                        Date:</label>
+                    <div class="col-9">
+                        <input type="date" name="date"
+                               id="date" class="form-control"/>
+                    </div>
+                </div>
+
+                <!--                  Nonprofit  -->
+                <div class="form-group row">
+                    <label for="nonprofit" class="col-3 col-form-label">
+                        Nonprofit:</label>
+                    <div class="col-9">
+                        <!--                        volunteerId is coming from addSkill param in controller-->
+                        <select id="nonprofit" name="nonprofitId" class="form-control" >
+                            <option disabled selected value="">-- Select nonprofit </option>
+                            <option th:each="nonprofit : ${nonprofits}"
+                                    th:value="${nonprofit.id}"
+                                    th:text="${nonprofit.companyName}">
+                                <!--                                    th:text="${volunteer.firstName}">-->
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Assignment</button>
+            </form>
+        </div>
+    </div>
+
+    <!--    *********** Table *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Assignment ID</th>
+                    <th>Assignment Title</th>
+                    <th>Additional Info</th>
+                    <th>Date</th>
+                    <th>Nonprofit</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="assignment : ${assignments}">
+                    <td th:text="${assignment.id}">Assignment ID</td>
+                    <td th:text="${assignment.title}">Assignment Title</td>
+                    <td th:text="${assignment.additionalInfo}">Additional Info</td>
+                    <td th:text="${#temporals.format(assignment.date, 'MM-dd-yyyy')}">Date</td>
+                    <td th:text="${assignment.nonprofit != null ? assignment.nonprofit.companyName : 'N/A'}">Nonprofit</td>
+                    <td><a href="#" th:href="@{/editAssignment(id=${assignment.id})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteAssignment(id=${assignment.id})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- End main body -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

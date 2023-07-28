@@ -26,10 +26,10 @@ public class SkillController {
     public String displaySkills(Model model) {
         List<Skill> skills = skillService.getAllSkills();
         List<Volunteer> volunteers = volunteerService.getAllVolunteers();
-//        System.out.println(volunteers);
+
         model.addAttribute("skills", skills);
-//        model.addAttribute("skills", new Skill());
         model.addAttribute("volunteers", volunteers);
+
         return "skills";
     }
 
