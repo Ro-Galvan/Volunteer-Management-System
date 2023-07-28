@@ -15,5 +15,5 @@ public interface AssignmentDao {
 
     //    extra method to show the assignments by nonprofits ON THE DETAILS PAGE????
     //    TODO I think in hero project it was only used in testing:-- IS IT REALLY NEEDED??????
-    List<Assignment> getAssignmentsByNonprofit(Nonprofit nonprofit);
+//    List<Assignment> getAssignmentsByNonprofit(Nonprofit nonprofit);
 }

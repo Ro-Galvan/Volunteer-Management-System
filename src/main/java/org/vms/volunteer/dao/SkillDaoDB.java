@@ -55,14 +55,13 @@ public class SkillDaoDB implements SkillDao{
         }
     }
 
-//TODO not sure if this is right
     @Override
     public Skill getSkillByID(int id) {
         try {
             final String SQL = "SELECT * FROM skill WHERE skillID = ?";
 
-            Skill skill = jdbc.queryForObject(SQL, new SkillMapper(), id);
             //executes SQL query and maps result to a Volunteer object using the VolunteerMapper class
+            Skill skill = jdbc.queryForObject(SQL, new SkillMapper(), id);
 //          TODO might have to try this way if it doesn't work:
 
 //            Volunteer volunteer = getVolunteerForSkill(skill.getVolunteer().getId());
@@ -95,7 +94,6 @@ public class SkillDaoDB implements SkillDao{
         }
     }
 
-//    TODO have to see if it works--
     @Override
     public void updateSkill(Skill skill) {
         final String UPDATE_SKILL = "UPDATE skill SET title = ?, additionalInfo = ?, volunteerID = ? "
