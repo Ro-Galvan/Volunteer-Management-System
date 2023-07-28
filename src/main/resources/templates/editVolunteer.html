@@ -44,6 +44,7 @@
         <div class="col-7 text-center m-3">
             <!--           action is the edit method name in controller-->
             <form action="editVolunteer" method="POST">
+
                 <!--                firstName-->
                 <div class="form-group row">
                     <label for="firstName" class="col-3 col-form-label">
@@ -104,6 +105,21 @@
                         <input type="text" name="state"
                                id="state" class="form-control"
                                th:value="${volunteer.state}"/>
+                    </div>
+                </div>
+
+                <!--                  nonprofits  -->
+                <div class="form-group row">
+                    <label for="nonprofits" class="col-3 col-form-label">
+                        Nonprofits:</label>
+                    <div class="col-9">
+                        <select multiple id="nonprofits" name="nonprofitID" class="form-control">
+                            <option th:each="nonprofit : ${nonprofits}"
+                                    th:value="${nonprofit.id}"
+                                    th:text="${nonprofit.companyName}"
+                                    th:selected="${volunteer.nonprofits.contains(nonprofit)}">
+                            </option>
+                        </select>
                     </div>
                 </div>
 

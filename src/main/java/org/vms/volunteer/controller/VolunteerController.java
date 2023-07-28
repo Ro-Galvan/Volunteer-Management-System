@@ -75,11 +75,37 @@ public class VolunteerController {
     @GetMapping("editVolunteer")
     public String editVolunteer(Integer id, Model model) {
         Volunteer volunteer = volunteerService.getVolunteerByID(id);
+        List<Nonprofit> nonprofits = nonprofitService.getAllNonprofits();
+//todo don't have the same as hero but don't think I need it
+        //        for(Nonprofit nonprofit : nonprofits) {
+//            nonprofit.setCompanyName(null);
+//        }
+
+        //adds volunteer selected by ID object, nonprofits as an attribute to model to display to web
         model.addAttribute("volunteer", volunteer);
+        model.addAttribute("nonprofits", nonprofits);
+
         return "editVolunteer";
     }
     @PostMapping("editVolunteer")
-    public String performEditVolunteer(Volunteer volunteer) {
+    public String performEditVolunteer(Integer id, HttpServletRequest request) {
+        Volunteer volunteer = volunteerService.getVolunteerByID(id);
+//        use the getParameterValues method to get a string array of nonprofitIDs
+        String[] nonprofitIDs = request.getParameterValues("nonprofitID");
+
+        volunteer.setFirstName(request.getParameter("firstName"));
+        volunteer.setLastName(request.getParameter("lastName"));
+        volunteer.setPhoneNumber(request.getParameter("phoneNumber"));
+        volunteer.setEmail(request.getParameter("email"));
+        volunteer.setCity(request.getParameter("city"));
+        volunteer.setState(request.getParameter("state"));
+
+        List<Nonprofit> nonprofitList = new ArrayList<>();
+        for (String nonprofitID : nonprofitIDs) {
+            nonprofitList.add(nonprofitService.getNonprofitByID(Integer.parseInt(nonprofitID)));
+        }
+        volunteer.setNonprofits(nonprofitList);
+
         volunteerService.updateVolunteer(volunteer);
         return "redirect:/volunteers";
     }
