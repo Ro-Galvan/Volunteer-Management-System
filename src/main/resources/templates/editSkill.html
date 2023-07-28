@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Volunteer Management System</title>
+</head>
+<body>
+<div class="container">
+    <div class="row m-4">
+        <div class="col text-center border border-dark">
+            <h1><a href="/" class="text-dark">Volunteer Management System</a></h1>
+        </div>
+    </div>
+    <!--    *********** menu *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <a href="volunteers" class="btn btn-outline-primary btn-lg">Volunteer</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="nonprofits" class="btn btn-outline-primary btn-lg">Nonprofit</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="assignments" class="btn btn-outline-primary btn-lg">Assignment</a>
+        </div>
+
+        <div class="col text-center m-3">
+            <a href="skills" class="btn btn-outline-primary btn-lg">Skill</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="timesheets" class="btn btn-outline-primary btn-lg">Timesheet</a>
+        </div>
+    </div>
+    <!--   *********** Form *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Edit Skill</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <!--           action is the edit method name in controller-->
+            <form action="editSkill" method="POST">
+
+                <!--                title-->
+                <div class="form-group row">
+                    <label for="title" class="col-3 col-form-label">
+                        Skill title:</label>
+                    <div class="col-9">
+                        <!--             th:value NEEDS TO BE ADDED FOR EACH FIELD-->
+                        <input type="text" name="title"
+                               id="title" class="form-control"
+                               th:value="${skill.title}"/>
+                    </div>
+                </div>
+                <!--                  additionalInfo  -->
+                <div class="form-group row">
+                    <label for="additionalInfo" class="col-3 col-form-label">
+                        Additional Info:</label>
+                    <div class="col-9">
+                        <input type="text" name="additionalInfo"
+                               id="additionalInfo" class="form-control"
+                               th:value="${skill.additionalInfo}"/>
+                    </div>
+                </div>
+
+                <!--                  volunteers  -->
+                <div class="form-group row">
+                    <label for="volunteers" class="col-3 col-form-label">
+                        Volunteers:</label>
+                    <div class="col-9">
+                        <select multiple id="volunteers" name="volunteerID" class="form-control">
+                            <option th:each="volunteer : ${volunteers}"
+                                    th:value="${volunteer.id}"
+                                    th:text="${volunteer.firstName + ' '
+                                            + volunteer.lastName}"
+                                    th:selected="${skill.volunteer.id == volunteer.id}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" name="id" th:value="${skill.id}"/>
+                <button type="submit" class="btn btn-primary">Update Skill</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End main body -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

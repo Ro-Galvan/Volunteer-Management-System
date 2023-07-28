@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.vms.volunteer.dto.Nonprofit;
 import org.vms.volunteer.dto.Skill;
 import org.vms.volunteer.dto.Volunteer;
 import org.vms.volunteer.service.SkillService;
@@ -64,6 +65,34 @@ public class SkillController {
 
         skillService.addSkill(skill);
 
+        return "redirect:/skills";
+    }
+
+    //              **************EDIT Skill*************
+    @GetMapping("editSkill")
+    public String editSkill(Integer id, Model model) {
+//        get Skill as well as the lists of volunteers to display all of them for the Edit
+        Skill skill = skillService.getSkillByID(id);
+        List<Volunteer> volunteers = volunteerService.getAllVolunteers();
+
+        //adds Skill selected by ID object, volunteers as an attribute to model to display to web
+        model.addAttribute("skill", skill);
+        model.addAttribute("volunteers", volunteers);
+
+        return "editSkill";
+    }
+
+    @PostMapping("editSkill")
+    public String performEditSkill(Integer id, HttpServletRequest request) {
+        Skill skill = skillService.getSkillByID(id);
+//         pull out the volunteerIDs data from the HttpServletRequest
+        String volunteerIDs = request.getParameter("volunteerID");
+
+        skill.setTitle(request.getParameter("title"));
+        skill.setAdditionalInfo(request.getParameter("additionalInfo"));
+        skill.setVolunteer(volunteerService.getVolunteerByID(Integer.parseInt(volunteerIDs)));
+
+        skillService.updateSkill(skill);
         return "redirect:/skills";
     }
 
