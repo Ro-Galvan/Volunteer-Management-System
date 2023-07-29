@@ -52,7 +52,7 @@ public class TimesheetController {
 
 //        take in an Timesheet object that captures the fields properties/fields, use HttpServletRequest object to capture those fields
         Timesheet timesheet = new Timesheet();
-        timesheet.setHoursLogged(request.getParameter("title"));
+        timesheet.setHoursLogged(request.getParameter("hoursLogged"));
         timesheet.setDate(LocalDate.parse(request.getParameter("date")));
 
 //      setting volunteer &  assignment using their respective service layer
