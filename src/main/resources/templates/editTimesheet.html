@@ -11,7 +11,6 @@
     <title>Volunteer Management System</title>
 </head>
 <body>
-<!-- Main Body of Page -->
 <div class="container">
     <div class="row m-4">
         <div class="col text-center border border-dark">
@@ -40,19 +39,21 @@
     <!--   *********** Form *********** -->
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Timesheet</span>
+            <span class="h3">Edit Timesheet</span>
         </div>
         <div class="col-7 text-center m-3">
-            <!--      action is the add method name in controller-->
-            <form action="addTimesheet" method="POST">
+            <!--           action is the edit method name in controller-->
+            <form action="editTimesheet" method="POST">
 
-                <!--                  hours logged  -->
+                <!--                hoursLogged-->
                 <div class="form-group row">
                     <label for="hoursLogged" class="col-3 col-form-label">
                         Hours Logged:</label>
                     <div class="col-9">
+                        <!--             th:value NEEDS TO BE ADDED FOR EACH FIELD-->
                         <input type="text" name="hoursLogged"
-                               id="hoursLogged" class="form-control"/>
+                               id="hoursLogged" class="form-control"
+                               th:value="${timesheet.hoursLogged}"/>
                     </div>
                 </div>
 
@@ -62,22 +63,23 @@
                         Date:</label>
                     <div class="col-9">
                         <input type="date" name="date"
-                               id="date" class="form-control"/>
+                               id="date" class="form-control"
+                               th:value="${timesheet.date}"/>
                     </div>
                 </div>
 
                 <!--                  volunteer  -->
                 <div class="form-group row">
-                    <label for="volunteer" class="col-3 col-form-label">
+                    <label for="volunteers" class="col-3 col-form-label">
                         Volunteer:</label>
                     <div class="col-9">
- <!--                        volunteerId is coming from addVolunteer param in controller-->
-                        <select id="volunteer" name="volunteerId" class="form-control" >
-                            <option disabled selected value="">-- Select Volunteer </option>
+                        <!--                        volunteerId is coming from addTimesheet param in controller-->
+                        <select id="volunteers" name="volunteerID" class="form-control" >
+                            <!--                            <option disabled selected value="">&#45;&#45; Select nonprofit </option>-->
                             <option th:each="volunteer : ${volunteers}"
                                     th:value="${volunteer.id}"
-                                    th:text="${volunteer.firstName + ' '
-                                    + volunteer.lastName}">
+                                    th:text="${volunteer.firstName + ' ' + volunteer.lastName}"
+                                    th:selected="${timesheet.volunteer.id == volunteer.id}">
                             </option>
                         </select>
                     </div>
@@ -85,55 +87,26 @@
 
                 <!--                  assignment  -->
                 <div class="form-group row">
-                    <label for="assignment" class="col-3 col-form-label">
+                    <label for="assignments" class="col-3 col-form-label">
                         Assignment:</label>
                     <div class="col-9">
-<!--                        assignmentId is coming from addVolunteer param in controller-->
-                        <select id="assignment" name="assignmentId" class="form-control" >
-                            <option disabled selected value="">-- Select Assignment </option>
+                        <!--                        assignmentId is coming from addTimesheet param in controller-->
+                        <select id="assignments" name="assignmentID" class="form-control" >
+                            <!--                            <option disabled selected value="">&#45;&#45; Select nonprofit </option>-->
                             <option th:each="assignment : ${assignments}"
                                     th:value="${assignment.id}"
-                                    th:text="${assignment.title}">
+                                    th:text="${assignment.title}"
+                                    th:selected="${timesheet.assignment.id == assignment.id}">
                             </option>
                         </select>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add Timesheet</button>
+                <input type="hidden" name="id" th:value="${timesheet.id}"/>
+                <button type="submit" class="btn btn-primary">Update Timesheet</button>
             </form>
         </div>
     </div>
-
-    <!--    *********** Table *********** -->
-    <div class="row m-4 border border-dark">
-        <div class="col text-center m-3">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Timesheet ID</th>
-                    <th>Hours Logged</th>
-                    <th>Date</th>
-                    <th>Volunteer</th>
-                    <th>Assignment</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="timesheet : ${timesheets}">
-                    <td th:text="${timesheet.id}">Timesheet ID</td>
-                    <td th:text="${timesheet.hoursLogged}">Hours Logged</td>
-                    <td th:text="${#temporals.format(timesheet.date, 'MM-dd-yyyy')}">Date</td>
-                    <td th:text="${timesheet.volunteer != null ? timesheet.volunteer.firstName + ' ' + timesheet.volunteer.lastName : 'N/A'}">Volunteer</td>
-                    <td th:text="${timesheet.assignment != null ? timesheet.assignment.title : 'N/A'}">Assignment</td>
-                    <td><a href="#" th:href="@{/editTimesheet(id=${timesheet.id})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteTimesheet(id=${timesheet.id})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
 </div>
 <!-- End main body -->
 

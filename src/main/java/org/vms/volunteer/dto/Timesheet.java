@@ -24,11 +24,11 @@ public class Timesheet {
         this.assignment = assignment;
     }
 
-    public Timesheet(int id, String hoursLogged, LocalDate date) {
-        this.id = id;
-        this.hoursLogged = hoursLogged;
-        this.date = date;
-    }
+//    public Timesheet(int id, String hoursLogged, LocalDate date) {
+//        this.id = id;
+//        this.hoursLogged = hoursLogged;
+//        this.date = date;
+//    }
 
     public int getId() {
         return id;

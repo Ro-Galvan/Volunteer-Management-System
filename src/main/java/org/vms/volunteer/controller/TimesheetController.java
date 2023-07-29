@@ -66,37 +66,38 @@ public class TimesheetController {
         return "redirect:/timesheets";
     }
 
-//  TODO need to add update
-
-
     //                  **************EDIT Timesheet*************
-//    @GetMapping("editTimesheet")
-//    public String editAssignment(Integer id, Model model) {
-////        get Timesheet  as well as the lists of Volunteers & Assignments to display all of them for the Edit
-//        Assignment assignment = assignmentService.getAssignmentByID(id);
-//        List<Nonprofit> nonprofits = nonprofitService.getAllNonprofits();
-//
-//        //adds Assignment selected by ID object, nonprofits as an attribute to model to display to web
-//        model.addAttribute("assignment", assignment);
-//        model.addAttribute("nonprofits", nonprofits);
-//
-//        return "editTimesheet";
-//    }
-//
-//    @PostMapping("editTimesheet")
-//    public String performEditTimesheet(Integer id, HttpServletRequest request) {
-//        Assignment assignment = assignmentService.getAssignmentByID(id);
-////         pull out the nonprofitIDs data from the HttpServletRequest
-//        String nonprofitIDs = request.getParameter("nonprofitID");
-//
-//        assignment.setTitle(request.getParameter("title"));
-//        assignment.setAdditionalInfo(request.getParameter("additionalInfo"));
-//        assignment.setDate(LocalDate.parse(request.getParameter("date")));
-//        assignment.setNonprofit(nonprofitService.getNonprofitByID(Integer.parseInt(nonprofitIDs)));
-//
-//        assignmentService.updateAssignment(assignment);
-//        return "redirect:/timesheets";
-//    }
+    @GetMapping("editTimesheet")
+    public String editTimesheet(Integer id, Model model) {
+//        get Timesheet  as well as the lists of Volunteers & Assignments to display all of them for the Edit
+        Timesheet timesheet = timesheetService.getTimesheetByID(id);
+        List<Volunteer> volunteers = volunteerService.getAllVolunteers();
+        List<Assignment> assignments = assignmentService.getAllAssignments();
+
+//        adding lists of timesheets & assignment and volunteer by ID as an attribute to model to display to web
+        model.addAttribute("timesheet", timesheet);
+        model.addAttribute("volunteers", volunteers);
+        model.addAttribute("assignments", assignments);
+
+        return "editTimesheet";
+    }
+
+    @PostMapping("editTimesheet")
+    public String performEditTimesheet(Integer id, HttpServletRequest request) {
+        Timesheet timesheet = timesheetService.getTimesheetByID(id);
+//         pull out the assignment and volunteer IDS data from the HttpServletRequest
+        String volunteerIDs = request.getParameter("volunteerID");
+        String assignmentIDs = request.getParameter("assignmentID");
+
+        timesheet.setHoursLogged(request.getParameter("hoursLogged"));
+        timesheet.setDate(LocalDate.parse(request.getParameter("date")));
+        //      setting volunteer &  assignment using their respective service layer
+        timesheet.setVolunteer(volunteerService.getVolunteerByID(Integer.parseInt(volunteerIDs)));
+        timesheet.setAssignment(assignmentService.getAssignmentByID(Integer.parseInt(assignmentIDs)));
+
+        timesheetService.updateTimesheet(timesheet);
+        return "redirect:/timesheets";
+    }
 
 
     @GetMapping("deleteTimesheet")

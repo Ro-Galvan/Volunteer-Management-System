@@ -80,7 +80,7 @@ public class TimesheetDaoDB implements TimesheetDao{
 
     @Override
     public void updateTimesheet(Timesheet timesheet) {
-        final String SQL = "UPDATE timesheet SET hoursLogged = ?, date = ?, volunteerID = ?, assignmentID = ? WHERE timesheetID = ?";
+        final String SQL = "UPDATE timesheet SET hoursLogged = ?, date = ?, volunteerID = ?, assignmentID = ? WHERE timesheetID = ? ";
         jdbc.update(SQL,
                 timesheet.getHoursLogged(),
                 timesheet.getDate(),

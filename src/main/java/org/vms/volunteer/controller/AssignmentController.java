@@ -60,9 +60,6 @@ public class AssignmentController {
         return "redirect:/assignments";
     }
 
-//  TODO need to add update
-
-
 //                  **************EDIT Assignment*************
     @GetMapping("editAssignment")
     public String editAssignment(Integer id, Model model) {
@@ -70,7 +67,7 @@ public class AssignmentController {
         Assignment assignment = assignmentService.getAssignmentByID(id);
         List<Nonprofit> nonprofits = nonprofitService.getAllNonprofits();
 
-        //adds Assignment selected by ID object, nonprofits as an attribute to model to display to web
+        //adds Assignment & nonprofits selected by ID object as an attribute to model to display to web
         model.addAttribute("assignment", assignment);
         model.addAttribute("nonprofits", nonprofits);
 
@@ -91,7 +88,6 @@ public class AssignmentController {
         assignmentService.updateAssignment(assignment);
         return "redirect:/assignments";
     }
-
 
     @GetMapping("deleteAssignment")
     public String deleteAssignment(Integer id) {

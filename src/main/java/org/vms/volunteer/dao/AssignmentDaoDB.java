@@ -66,7 +66,7 @@ public class AssignmentDaoDB implements AssignmentDao{
 
             //executes SQL query and maps result to an Assignment object using the AssignmentMapper class
             Assignment assignment = jdbc.queryForObject(SQL, new AssignmentMapper(), id);
-
+//TODO potential issue
             assignment.setNonprofit(getNonprofitForAssignment(id));
 
 
