@@ -126,29 +126,26 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Phone Number</th>
                     <th>Email</th>
                     <th>City</th>
                     <th>State</th>
-<!--                    <th>Nonprofit</th>-->
+                    <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="volunteer : ${volunteers}">
-                    <td th:text="${volunteer.id}">Volunteer ID</td>
                     <td th:text='${volunteer.firstName}'>Volunteer First Name</td>
                     <td th:text='${volunteer.lastName}'>Volunteer Last Name</td>
                     <td th:text='${volunteer.phoneNumber}'>Volunteer Phone Number</td>
                     <td th:text='${volunteer.email}'>Volunteer Email</td>
                     <td th:text='${volunteer.city}'>Volunteer City</td>
                     <td th:text='${volunteer.state}'>Volunteer State</td>
-<!--                    <td th:text='${volunteer.nonprofits}'>Nonprofit</td>-->
-<!--                    <td><a href="#" th:href="@{/volunteerDetail(id=${volunteer.id})}">Details</a></td>-->
+                    <td><a href="#" th:href="@{/detailVolunteer(id=${volunteer.id})}">Details</a></td>
                     <td><a href="#" th:href="@{/editVolunteer(id=${volunteer.id})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteVolunteer(id=${volunteer.id})}">Delete</a></td>
                 </tr>

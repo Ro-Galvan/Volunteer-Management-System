@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vms.volunteer.dto.Nonprofit;
+import org.vms.volunteer.dto.Volunteer;
 import org.vms.volunteer.mapper.NonprofitMapper;
 
 import java.util.List;
@@ -76,6 +77,20 @@ public class NonprofitDaoDB implements NonprofitDao{
         jdbc.update(sql, id);
 
     }
+
+    // this helps with the volunteer details page to display associated nonprofits
+    @Override
+    public List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer) {
+        final String sql = "SELECT n.*"
+                +"FROM `nonprofit` n "
+                +"INNER JOIN nonprofit_volunteer nv ON n.nonprofitID = nv.nonprofitID "
+                +"WHERE nv.volunteerID  = ?";
+
+        List<Nonprofit> nonprofits = jdbc.query(sql, new NonprofitMapper(), volunteer.getId());
+
+        return nonprofits;
+    }
+
 
 //    TODO I believe this method is needed for testing later not for frontend
 //    @Override

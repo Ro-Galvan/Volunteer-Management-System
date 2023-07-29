@@ -15,7 +15,6 @@ public interface NonprofitDao {
     void deleteNonprofitByID(int id);
 
 
-
-//    extra method to show the nonprofits by assignments ON THE Assignment DETAILS PAGE:
-//    List<Nonprofit> getNonprofitsByAssignment(Assignment assignment);
+//    extra method to show the nonprofits by volunteer ON THE volunteer DETAILS PAGE:
+    List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer);
 }

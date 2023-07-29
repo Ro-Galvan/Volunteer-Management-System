@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vms.volunteer.dao.NonprofitDao;
 import org.vms.volunteer.dto.Nonprofit;
+import org.vms.volunteer.dto.Volunteer;
 
 import java.util.List;
 @Service
@@ -35,5 +36,10 @@ public class NonprofitServiceImpl implements NonprofitService{
     @Override
     public void deleteNonprofitByID(int id) {
         nonprofitDao.deleteNonprofitByID(id);
+    }
+// this helps with the volunteer details page to display associated nonprofits
+    @Override
+    public List<Nonprofit> getNonprofitsByVolunteer(Volunteer volunteer) {
+        return nonprofitDao.getNonprofitsByVolunteer(volunteer);
     }
 }

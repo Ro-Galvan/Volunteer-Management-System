@@ -116,4 +116,29 @@ public class VolunteerController {
         return "redirect:/volunteers";
     }
 
+    //              **************Volunteer DETAIL*************
+
+    /**
+     * handles HTTP GET requests for the URL path /detailVolunteer
+     * method retrieves info about a superhero & adds this data to the Model.
+     * The Thymeleaf template, "detailHero.html," will use this data to render the details of the superhero on the web page.
+     * @param id  identifies the specific hero for which the details will be fetched
+     * @param model Spring Model object that allows you to pass data from the controller to the view (Thymeleaf template) for rendering.
+     * @return method returns the String "detailHero". This indicates that the Thymeleaf template named "detailHero.html" will be used to render the response for the request.
+     */
+    @GetMapping("detailVolunteer")
+    public String detailVolunteer(Integer id, Model model) {
+//        calls the method from Service (pass through method from DAO) that retrieves the Volunteer object with the selected id and assigns it to Volunteer variable
+        Volunteer volunteer = volunteerService.getVolunteerByID(id);
+//        retrieve a list of nonprofit objects to which the volunteer belongs. The method is passed the volunteer object, volunteer, from above
+        List<Nonprofit> getVolunteerByNonprofit = nonprofitService.getNonprofitsByVolunteer(volunteer);
+
+
+//        adds the Volunteer object to the Model with the attribute name "volunteer". This will make the Volunteer object accessible in the Thymeleaf template.
+        model.addAttribute("volunteer", volunteer);
+//       adds the list of Nonprofit objects to the Model with the attribute name "nonprofits". This will make the list of Nonprofits accessible in the Thymeleaf template.
+        model.addAttribute("nonprofits", getVolunteerByNonprofit);
+
+        return "detailVolunteer";
+    }
 }
