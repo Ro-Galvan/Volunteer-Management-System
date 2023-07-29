@@ -44,8 +44,7 @@ public class AssignmentDaoDB implements AssignmentDao{
     //    *****PRIVATE HELPER METHOD***
     private Nonprofit getNonprofitForAssignment(int id) {
         try{
-//            TODO might need to fix this SQL statement if it doesn't work on front end
-            //With an INNER JOIN, only the skills that have a matching volunteerID in the volunteer table will be included in the result set.
+            //With an INNER JOIN, only the Assignments that have a matching NonprofitID in the volunteer table will be included in the result set.
             final String SELECT_NONPROFIT_FOR_ASSIGNMENT = "SELECT n.* FROM assignment a JOIN nonprofit n ON a.nonprofitID = n.nonprofitID WHERE a.assignmentID = ?;";
 //            what I had earlier that was wrong:
 //            final String SELECT_VOLUNTEER_FOR_SKILL = "SELECT v.* FROM skill s JOIN volunteer v ON s.volunteerID = v.volunteerID WHERE s.volunteerID = ?;";

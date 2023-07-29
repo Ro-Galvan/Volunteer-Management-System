@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.vms.volunteer.dto.Assignment;
 import org.vms.volunteer.dto.Timesheet;
 import org.vms.volunteer.dto.Volunteer;
+import org.vms.volunteer.mapper.AssignmentMapper;
+import org.vms.volunteer.mapper.TimesheetMapper;
 import org.vms.volunteer.mapper.VolunteerMapper;
 
 import java.util.List;
@@ -42,22 +44,55 @@ public class TimesheetDaoDB implements TimesheetDao{
 
     @Override
     public Timesheet getTimesheetByID(int id) {
-        return null;
+        try {
+            final String SQL = "SELECT * FROM timesheet WHERE timesheetID = ?";
+
+            //executes SQL query and maps result to an Assignment object using the AssignmentMapper class
+            Timesheet timesheet = jdbc.queryForObject(SQL, new TimesheetMapper(), id);
+//      using private methods
+            timesheet.setVolunteer(getVolunteerForTimesheet(id));
+            timesheet.setAssignment(getAssignmentForTimesheet(id));
+
+            return timesheet;
+        } catch (DataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
+    @Transactional
     public List<Timesheet> getAllTimesheets() {
-        return null;
+        try{
+            final String sql = "SELECT * FROM timesheet";
+            List<Timesheet> timesheetList = jdbc.query(sql, new TimesheetMapper());
+
+
+            for (Timesheet timesheet : timesheetList){
+                timesheet.setVolunteer(getVolunteerForTimesheet(timesheet.getId()));
+                timesheet.setAssignment(getAssignmentForTimesheet(timesheet.getId()));
+
+            }
+            return timesheetList;
+        } catch (DataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
     public void updateTimesheet(Timesheet timesheet) {
-
+        final String SQL = "UPDATE timesheet SET hoursLogged = ?, date = ?, volunteerID = ?, assignmentID = ? WHERE timesheetID = ?";
+        jdbc.update(SQL,
+                timesheet.getHoursLogged(),
+                timesheet.getDate(),
+                timesheet.getVolunteer().getId(),
+                timesheet.getAssignment().getId(),
+                timesheet.getId());
     }
 
     @Override
     public void deleteTimesheetByID(int id) {
-
+        final String DELETE = "DELETE FROM timesheet WHERE timesheetID = ?";
+        jdbc.update(DELETE, id);
     }
 
     //    *****PRIVATE HELPER METHODS***
@@ -66,7 +101,7 @@ public class TimesheetDaoDB implements TimesheetDao{
         try{
             //With an INNER JOIN, only the skills that have a matching volunteerID in the volunteer table will be included in the result set.
 //            TODO need to update the SQL query to use timesheet table instead of Skill
-            final String SELECT_VOLUNTEER_FOR_TIMESHEET = "SELECT v.* FROM skill s JOIN volunteer v ON s.volunteerID = v.volunteerID WHERE s.skillID = ?;";
+            final String SELECT_VOLUNTEER_FOR_TIMESHEET = "SELECT v.* FROM timesheet t JOIN volunteer v ON t.volunteerID = v.volunteerID WHERE t.timesheetID = ?;";
 //            what I had earlier that was wrong:
 //            final String SELECT_VOLUNTEER_FOR_SKILL = "SELECT v.* FROM skill s JOIN volunteer v ON s.volunteerID = v.volunteerID WHERE s.volunteerID = ?;";
 
@@ -81,16 +116,19 @@ public class TimesheetDaoDB implements TimesheetDao{
 
 
     private Assignment getAssignmentForTimesheet(int id){
-//        try {
-// //   TODO need to update the SQL query & add the assignment mapper once it's DAO is complete
-//            final String SQL = "SELECT p.* FROM hero h " +
-//                    "JOIN power p ON h.PowerPK = p.PowerPK WHERE h.HeroPK = ?;";
-//            return jdbc.queryForObject(SQL, new PowerMapper(), id);
-//        } catch (DataAccessException ex) {
-//            return null;
-//        }
+        try{
+            //With an INNER JOIN, only the Timesheets that have a matching assignmentID in the Assignment table will be included in the result set.
+            final String SELECT_ASSIGNMENT_FOR_TIMESHEET = "SELECT a.* FROM timesheet t JOIN assignment a ON t.assignmentID = a.assignmentID WHERE t.timesheetID = ?;";
+//            what I had earlier that was wrong:
+//            final String SELECT_VOLUNTEER_FOR_SKILL = "SELECT v.* FROM skill s JOIN volunteer v ON s.volunteerID = v.volunteerID WHERE s.volunteerID = ?;";
 
-        return null;
+//            JDBC queryForObject brings back 1 row and wrapped in a try catch but query for doesn't
+            Assignment assignment = jdbc.queryForObject(SELECT_ASSIGNMENT_FOR_TIMESHEET, new AssignmentMapper(), id);
+            return assignment;
+        }
+        catch (DataAccessException ex){
+            return null;
+        }
     }
 
 //    @Override
