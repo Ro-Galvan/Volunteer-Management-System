@@ -33,7 +33,7 @@ public class AssignmentDaoDB implements AssignmentDao{
         //sets the ID of the object to the newly generated ID
         assignment.setId(newId);
 //        Using private method to set Nonprofit associated with Assignment
-        Nonprofit nonprofit = getNonprofitForAssignment(assignment.getNonprofit().getId());
+        Nonprofit nonprofit = getNonprofitForAssignment(newId);
         assignment.setNonprofit(nonprofit);
         //return the modified Assignment object
         return assignment;

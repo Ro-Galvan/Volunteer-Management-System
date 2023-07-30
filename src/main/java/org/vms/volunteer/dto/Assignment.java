@@ -24,6 +24,13 @@ public class Assignment {
         this.nonprofit = nonprofit;
     }
 
+    public Assignment(String title, String additionalInfo, LocalDate date, Nonprofit nonprofit) {
+        this.title = title;
+        this.additionalInfo = additionalInfo;
+        this.date = date;
+        this.nonprofit = nonprofit;
+    }
+
     public int getId() {
         return id;
     }
