@@ -132,5 +132,5 @@ public class SkillDaoDB implements SkillDao{
 
         return skills;
     }
-    
+
 }

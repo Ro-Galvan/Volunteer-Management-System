@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vms.volunteer.dto.Assignment;
 import org.vms.volunteer.dto.Nonprofit;
-import org.vms.volunteer.dto.Skill;
 import org.vms.volunteer.mapper.AssignmentMapper;
 import org.vms.volunteer.mapper.NonprofitMapper;
-import org.vms.volunteer.mapper.SkillMapper;
 
 
 import java.util.List;

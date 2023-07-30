@@ -24,7 +24,15 @@ public class Nonprofit {
         this.mission = mission;
     }
 
-//    getters & setters
+    public Nonprofit(String companyName, String phoneNumber, String email, String address, String mission) {
+        this.companyName = companyName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.mission = mission;
+    }
+
+    //    getters & setters
     public int getId() {
         return id;
     }
