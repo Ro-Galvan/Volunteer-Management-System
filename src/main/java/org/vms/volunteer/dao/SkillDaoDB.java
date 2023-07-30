@@ -29,8 +29,9 @@ public class SkillDaoDB implements SkillDao{
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         //sets the ID of the object to the newly generated ID
         skill.setId(newId);
-//        TODO added a private method
-        Volunteer volunteer = getVolunteerForSkill(skill.getVolunteer().getId());
+//        using private method
+        Volunteer volunteer = getVolunteerForSkill(newId); // TODO had to change to get the tests to pass
+//        Volunteer volunteer = getVolunteerForSkill(skill.getVolunteer().getId());
         skill.setVolunteer(volunteer);
         //return the modified Skill object
         return skill;

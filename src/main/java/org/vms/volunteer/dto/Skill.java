@@ -18,8 +18,21 @@ public class Skill {
         this.title = title;
         this.additionalInfo = additionalInfo;
     }
+// **********This will help for testing
+    public Skill(String title, String additionalInfo, Volunteer volunteer) {
+        this.title = title;
+        this.additionalInfo = additionalInfo;
+        this.volunteer = volunteer;
+    }
 
-//    getters & setters
+    public Skill(int id, String title, String additionalInfo, Volunteer volunteer) {
+        this.id = id;
+        this.title = title;
+        this.additionalInfo = additionalInfo;
+        this.volunteer = volunteer;
+    }
+
+    //    getters & setters
     public int getId() {
         return id;
     }

@@ -17,8 +17,27 @@ public class Volunteer {
 
     public Volunteer() {
     }
+// this constructor will be useful in tests
+    public Volunteer(String firstName, String lastName, String phoneNumber, String email, String city, String state) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.city = city;
+        this.state = state;
+    }
 
-    public Volunteer(int id, String firstName, String lastName, String phoneNumber, String email, String city, String state) {
+    public Volunteer(String firstName, String lastName, String phoneNumber, String email, String city, String state, List<Nonprofit> nonprofits) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.city = city;
+        this.state = state;
+        this.nonprofits = nonprofits;
+    }
+
+    public Volunteer(int id, String firstName, String lastName, String phoneNumber, String email, String city, String state, List<Nonprofit> nonprofits) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,6 +45,7 @@ public class Volunteer {
         this.email = email;
         this.city = city;
         this.state = state;
+        this.nonprofits = nonprofits;
     }
 
     public int getId() {
