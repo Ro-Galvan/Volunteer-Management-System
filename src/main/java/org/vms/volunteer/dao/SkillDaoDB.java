@@ -113,17 +113,24 @@ public class SkillDaoDB implements SkillDao{
 
 
 //    This is for the search feature to filter by volunteer
+//    *************original method but without the for loop on skills to set volunteer it didn't populate volunteer name column on front end
+//    the original method didn't have the for loop
     @Override
     public List<Skill> getSkillsByVolunteer(Volunteer volunteer) {
+//        simpler and easier to understand, separates the queries for skills and volunteers.
         final String SQL = "SELECT * FROM skill WHERE volunteerID = ?;";
+//        this way works too but involves a more complex SQL query harder to read and maintain, especially if there are more tables or complex relationships involved
+//        final String SQL = "SELECT s.*, v.firstName, v.lastName FROM skill s " +
+//                "JOIN Volunteer v ON s.volunteerID = v.volunteerID " +
+//                "WHERE s.volunteerID = ?;";
 
-//        final String SQL = "SELECT v.volunteerID, v.firstName, v.lastName, v.phoneNum, v.email, v.city, v.state, s.skillID, s.title AS skillTitle, s.additionalInfo " +
-//                "FROM Volunteer " +
-//                "LEFT JOIN Skill s ON v.volunteerID = s.volunteerID;";
+        List<Skill> skills = jdbc.query(SQL, new SkillMapper(), volunteer.getId());
 
-//        return jdbc.query(SQL, new SkillMapper(), volunteer.getId());
+        for (Skill skill : skills) {
+            skill.setVolunteer(volunteer);
+        }
 
-        List<Skill> list = jdbc.query(SQL, new SkillMapper(), volunteer.getId());
-        return list;
+        return skills;
     }
+    
 }

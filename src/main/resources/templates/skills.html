@@ -121,17 +121,18 @@
                 <div class="form-group row">
                     <label for="volunteerSearch" class="col-3 col-form-label">Display Skills By Volunteer:</label>
                     <div class="col-4">
-                        <select id="volunteerSearch" name="volunteerId" class="form-control" >
+                        <select id="volunteerSearch" name="volunteerID" class="form-control" >
                             <option th:each="volunteer: ${volunteers}"
                                     th:value="${volunteer.id}"
                                     th:text="${volunteer.firstName + ' ' + volunteer.lastName}">
+                                    th:text="${skill.volunteer skill.volunteer.firstName + ' ' + skill.volunteer.lastName}">
                                 </option>
                         </select>
                     </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Search</button>
-                <a href="sightings"><button type="button" class="btn btn-danger">Reset Settings</button> </a>
+                <a href="skills"><button type="button" class="btn btn-danger">Reset Settings</button> </a>
             </form>
         </div>
     </div>

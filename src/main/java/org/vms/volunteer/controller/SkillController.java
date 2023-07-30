@@ -93,10 +93,14 @@ public class SkillController {
 
     //              **************Search by volunteer*************
     @GetMapping("skillsByVolunteer")
-    public String getSkillsByVolunteer(Integer volunteerId, Model model, HttpServletRequest request) {
-        Volunteer volunteer = volunteerService.getVolunteerByID(volunteerId);
+    public String getSkillsByVolunteer(Integer volunteerID, Model model, HttpServletRequest request) {
+        Volunteer volunteer = volunteerService.getVolunteerByID(volunteerID);
 
         List<Skill> skills = skillService.getSkillsByVolunteer(volunteer);
+// if I keep the original method in DAO I can add the for loop here to populate volunteer name but better to keep this in dao or service layer for code reusability
+//        for (Skill skill : skills) {
+//            skill.setVolunteer(volunteer);
+//        }
         model.addAttribute("skills", skills);
 
         List<Volunteer> volunteers = volunteerService.getAllVolunteers();
