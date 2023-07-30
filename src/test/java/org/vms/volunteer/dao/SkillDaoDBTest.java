@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import org.vms.volunteer.dto.Nonprofit;
 import org.vms.volunteer.dto.Skill;
 import org.vms.volunteer.dto.Volunteer;
@@ -23,6 +24,7 @@ class SkillDaoDBTest {
     @Autowired
     private NonprofitDao nonprofitDao;
     private Volunteer testVolunteer;
+    private Skill testSkill;
 
     @BeforeEach
     void setUp() {
@@ -35,54 +37,26 @@ class SkillDaoDBTest {
         // Add the Nonprofit to the database
         testNonprofit = nonprofitDao.addNonprofit(testNonprofit);
 
-        // Create a new Volunteer
+// Create a new Volunteer
         Volunteer testVolunteer = new Volunteer("John", "Doe", "555-123-4567", "john.doe@example.com", "New York", "NY", new ArrayList<>());
         // Add the Volunteer to the database
         testVolunteer = volunteerDao.addVolunteer(testVolunteer);
 
-        // Add the Nonprofit to the Volunteer's list of nonprofits
-        testVolunteer.getNonprofits().add(testNonprofit);
+//        // Create a new Skill associated with the Volunteer
+//        Skill testSkill = new Skill("Test Skill", "Test Additional Info", testVolunteer);
+//        // Add the Skill to the database
+//        testSkill = skillDao.addSkill(testSkill);
 
-        // Save the Volunteer object for use in the test methods
+        // Save the Volunteer and Skill objects for use in the test methods
         this.testVolunteer = testVolunteer;
-
-        // Delete all Skills
-        List<Skill> skills = skillDao.getAllSkills();
-//        enhanced for loop" or "foreach loop" that is  iterating over elements in a collection or an array. The arrow (->) used in this context is part of Java's lambda expression syntax, which is used to define a lambda or an anonymous function.
-        skills.forEach(skill -> skillDao.deleteSkillByID(skill.getId()));
-
-        // Delete all Volunteers
-        List<Volunteer> volunteers = volunteerDao.getAllVolunteers();
-        volunteers.forEach(volunteer -> volunteerDao.deleteVolunteerByID(volunteer.getId()));
+//        this.testSkill = testSkill;
+    
     }
 
-//    @Test
-//    void addSkill() {
-//        // Arrange - using the Volunteer object set up in @BeforeEach & using the Skill constructor
-//        Volunteer volunteer = new Volunteer("John", "Doe", "555-123-4567", "john.doe@example.com", "New York", "NY", null);
-//        volunteer = volunteerDao.addVolunteer(volunteer);
-//
-//        Skill skill = new Skill("Fundraising", "Experience in organizing fundraising events and campaigns", volunteer);
-//
-//        // Act - Call the addSkill() method
-//        skill = skillDao.addSkill(skill);
-//
-//        // Assert
-//        assertNotNull(skill);
-//        assertNotNull(skill.getId());
-//        assertEquals("Fundraising", skill.getTitle());
-//        assertEquals("Experience in organizing fundraising events and campaigns", skill.getAdditionalInfo());
-//
-//        // Verify the Volunteer associated with the Skill
-//        assertNotNull(skill.getVolunteer());
-//        assertEquals(volunteer.getId(), skill.getVolunteer().getId());
-//        assertEquals(volunteer.getFirstName(), skill.getVolunteer().getFirstName());
-//        assertEquals(volunteer.getLastName(), skill.getVolunteer().getLastName());
-//        assertEquals(volunteer.getEmail(), skill.getVolunteer().getEmail());
-//    }
 
 
     @Test
+    @Transactional
     void addSkill() {
 //        Create the Volunteer object first, then use it to create the Skill object for testing.
         // Arrange - Create a new Volunteer and add it to the database
@@ -138,13 +112,69 @@ class SkillDaoDBTest {
 
     @Test
     void getAllSkills() {
+        // Arrange - Create some skills and add them to the database, associated with the testVolunteer
+        Skill skill1 = new Skill("Skill 1", "Additional Info 1", testVolunteer);
+        skill1 = skillDao.addSkill(skill1);
+
+        Skill skill2 = new Skill("Skill 2", "Additional Info 2", testVolunteer);
+        skill2 = skillDao.addSkill(skill2);
+
+        // Act - Call the getAllSkills() method to retrieve skills associated with testVolunteer
+        List<Skill> skills = skillDao.getAllSkills();
+
+        // Assert - Check if the list of skills is not null and contains the expected number of skills
+        assertNotNull(skills);
+        assertEquals(2, skills.size());
+
+        // Verify that all the retrieved skills are associated with the testVolunteer
+        for (Skill skill : skills) {
+            assertEquals(testVolunteer.getId(), skill.getVolunteer().getId());
+            assertEquals(testVolunteer.getFirstName(), skill.getVolunteer().getFirstName());
+            assertEquals(testVolunteer.getLastName(), skill.getVolunteer().getLastName());
+            // Add additional assertions as needed for other properties of the Volunteer object
+        }
     }
 
     @Test
+    @Transactional
     void updateSkill() {
+        // Arrange - Create a new skill and add it to the database
+        Skill skill = new Skill("Original Title", "Original Additional Info", testVolunteer);
+        skill = skillDao.addSkill(skill);
+
+        // Modify the skill's properties
+        skill.setTitle("Updated Title");
+        skill.setAdditionalInfo("Updated Additional Info");
+
+        // Act - Call the updateSkill() method to update the skill in the database
+        skillDao.updateSkill(skill);
+
+        // Retrieve the skill from the database again to check if it was updated
+        Skill updatedSkill = skillDao.getSkillByID(skill.getId());
+
+        // Assert - Check if the retrieved skill matches the updated skill
+        assertNotNull(updatedSkill.getVolunteer());
+        assertEquals(skill.getId(), updatedSkill.getId());
+        assertEquals(skill.getTitle(), updatedSkill.getTitle());
+        assertEquals(skill.getAdditionalInfo(), updatedSkill.getAdditionalInfo());
+        // Add additional assertions as needed for other properties
     }
 
     @Test
+    @Transactional
     void deleteSkillByID() {
+        // Arrange - Create a new skill and add it to the database
+        Skill skill = new Skill("Title to Delete", "Additional Info to Delete", testVolunteer);
+        skill = skillDao.addSkill(skill);
+
+        // Act - Call the deleteSkillByID() method to delete the skill from the database
+        skillDao.deleteSkillByID(skill.getId());
+
+        // Try to retrieve the skill from the database again
+        Skill deletedSkill = skillDao.getSkillByID(skill.getId());
+
+        // Assert - Check if the retrieved skill is null after deletion
+        assertNull(deletedSkill);
     }
+
 }
