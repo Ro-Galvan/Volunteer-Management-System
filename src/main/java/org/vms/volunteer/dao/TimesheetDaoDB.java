@@ -32,11 +32,12 @@ public class TimesheetDaoDB implements TimesheetDao{
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         //sets the ID of the object to the newly generated ID
         timesheet.setId(newId);
-//        TODO private methods go here to get Volunteer + Assignment ids
+//        private methods are used to get Volunteer + Assignment ids
         Volunteer volunteer = getVolunteerForTimesheet(timesheet.getVolunteer().getId());
         timesheet.setVolunteer(volunteer);
-
-        Assignment assignment = getAssignmentForTimesheet(timesheet.getAssignment().getId());
+//TODO should the id passed be newID instead?
+//        Assignment assignment = getAssignmentForTimesheet(timesheet.getAssignment().getId());
+        Assignment assignment = getAssignmentForTimesheet(newId);
         timesheet.setAssignment(assignment);
         //return the modified timesheet object
         return timesheet;

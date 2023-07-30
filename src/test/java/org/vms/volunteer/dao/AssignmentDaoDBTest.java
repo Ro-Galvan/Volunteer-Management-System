@@ -57,7 +57,7 @@ class AssignmentDaoDBTest {
 //    The below test has comments that show arranging the info instead of creating a test nonprofit & assignment in the @BeforeEach to avoid DRY
 //    leaving as FYI to have an example of how else it can be done
     @Test
-//    @Transactional
+    @Transactional
     void addAssignment() {
 // Arrange - using the Nonprofit object set up in @BeforeEach & using the Assignment constructor
         Assignment assignment = new Assignment("Marketing Campaign", "Social media promotion", LocalDate.now(), testNonprofit);
@@ -81,7 +81,7 @@ class AssignmentDaoDBTest {
 
     //    The below test moves the arrange portion to the @BeforeEach to avoid DRY. Before each test, a test nonprofit & assignment is created to use withing the method
     @Test
-//    @Transactional
+    @Transactional
     void getAssignmentByID() {
         // Act
         Assignment retrievedAssignment = assignmentDao.getAssignmentByID(assignment1.getId());
@@ -97,7 +97,7 @@ class AssignmentDaoDBTest {
     }
 
     @Test
-//    @Transactional
+    @Transactional
     void getAllAssignments() {
         // Act
         List<Assignment> allAssignments = assignmentDao.getAllAssignments();
@@ -114,6 +114,7 @@ class AssignmentDaoDBTest {
 
 
     @Test
+    @Transactional
     void updateAssignment() {
         // Arrange - assignment1 is set up in @BeforeEach
         assignment1.setTitle("Updated Assignment");
@@ -142,7 +143,7 @@ class AssignmentDaoDBTest {
 
 
     @Test
-//    @Transactional
+    @Transactional
     void deleteAssignmentByID() {
         // Arrange - assignment1 is set up in @BeforeEach
 

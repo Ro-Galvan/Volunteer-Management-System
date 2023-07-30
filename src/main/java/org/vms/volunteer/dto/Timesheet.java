@@ -24,7 +24,13 @@ public class Timesheet {
         this.assignment = assignment;
     }
 
-//    public Timesheet(int id, String hoursLogged, LocalDate date) {
+    public Timesheet(String hoursLogged, LocalDate date, Volunteer volunteer, Assignment assignment) {
+        this.hoursLogged = hoursLogged;
+        this.date = date;
+        this.volunteer = volunteer;
+        this.assignment = assignment;
+    }
+    //    public Timesheet(int id, String hoursLogged, LocalDate date) {
 //        this.id = id;
 //        this.hoursLogged = hoursLogged;
 //        this.date = date;

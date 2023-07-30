@@ -86,6 +86,7 @@ class SkillDaoDBTest {
 
 
     @Test
+    @Transactional
     void getSkillByID() {
         // Arrange - Create a new Volunteer and add it to the database
         Volunteer testVolunteer = new Volunteer("John", "Doe", "555-123-4567", "john.doe@example.com", "New York", "NY", new ArrayList<>());
@@ -111,6 +112,7 @@ class SkillDaoDBTest {
     }
 
     @Test
+    @Transactional
     void getAllSkills() {
         // Arrange - Create some skills and add them to the database, associated with the testVolunteer
         Skill skill1 = new Skill("Skill 1", "Additional Info 1", testVolunteer);

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import org.vms.volunteer.dto.Nonprofit;
 
 import java.util.List;
@@ -22,6 +23,7 @@ class NonprofitDaoDBTest {
     }
 
     @Test
+    @Transactional
     void addNonprofit() {
         // Arrange - using constructors from my DTO
         Nonprofit nonprofit = new Nonprofit("Tech4Good", "757-555-1234", "test@test.com", "321 Pine Blvd, Raleigh, NC", "Using technology for social impact");
@@ -40,6 +42,7 @@ class NonprofitDaoDBTest {
     }
 
     @Test
+    @Transactional
     void getNonprofitByID() {
         // Arrange - add a nonprofit to the database
         Nonprofit nonprofit = new Nonprofit("Tech4Good", "757-555-1234", "test@test.com", "321 Pine Blvd, Raleigh, NC", "Using technology for social impact");
@@ -59,6 +62,7 @@ class NonprofitDaoDBTest {
     }
 
     @Test
+    @Transactional
     void getAllNonprofits() {
         // Arrange - Add two nonprofits to the database
         Nonprofit nonprofit1 = new Nonprofit("Tech4Good", "757-555-1234", "test1@test.com", "321 Pine Blvd, Raleigh, NC", "Using technology for social impact");
@@ -79,6 +83,7 @@ class NonprofitDaoDBTest {
 
 
     @Test
+    @Transactional
     void updateNonprofit() {
         // Arrange - add a nonprofit to the database
         Nonprofit nonprofit = new Nonprofit("Tech4Good", "757-555-1234", "test@test.com", "321 Pine Blvd, Raleigh, NC", "Using technology for social impact");
@@ -105,6 +110,7 @@ class NonprofitDaoDBTest {
     }
 
     @Test
+    @Transactional
     void deleteNonprofitByID() {
         // Arrange - add a nonprofit to the database
         Nonprofit nonprofit = new Nonprofit("Tech4Good", "757-555-1234", "test@test.com", "321 Pine Blvd, Raleigh, NC", "Using technology for social impact");
