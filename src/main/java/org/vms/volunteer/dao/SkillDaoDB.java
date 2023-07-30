@@ -112,12 +112,18 @@ public class SkillDaoDB implements SkillDao{
     }
 
 
-//    TODO do I need the below??
+//    This is for the search feature to filter by volunteer
     @Override
     public List<Skill> getSkillsByVolunteer(Volunteer volunteer) {
-        final String SQL = "SELECT v.volunteerID, v.firstName, v.lastName, v.phoneNum, v.email, v.city, v.state, s.skillID, s.title AS skillTitle, s.additionalInfo " +
-                "FROM Volunteer " +
-                "LEFT JOIN Skill s ON v.volunteerID = s.volunteerID;";
-        return jdbc.query(SQL, new SkillMapper(), volunteer.getId());
+        final String SQL = "SELECT * FROM skill WHERE volunteerID = ?;";
+
+//        final String SQL = "SELECT v.volunteerID, v.firstName, v.lastName, v.phoneNum, v.email, v.city, v.state, s.skillID, s.title AS skillTitle, s.additionalInfo " +
+//                "FROM Volunteer " +
+//                "LEFT JOIN Skill s ON v.volunteerID = s.volunteerID;";
+
+//        return jdbc.query(SQL, new SkillMapper(), volunteer.getId());
+
+        List<Skill> list = jdbc.query(SQL, new SkillMapper(), volunteer.getId());
+        return list;
     }
 }

@@ -93,7 +93,6 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Skill ID</th>
                     <th>Skill Title</th>
                     <th>Additional Info</th>
                     <th>Volunteer Who has this skill</th>
@@ -103,7 +102,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="skill : ${skills}">
-                    <td th:text="${skill.id}">Skill ID</td>
                     <td th:text="${skill.title}">Skill Title</td>
                     <td th:text="${skill.additionalInfo}">Additional Info</td>
 <!--                    <td th:text="${skill.volunteer.firstName + ' ' + skill.volunteer.lastName}">Volunteer Who has this skill</td>-->
@@ -113,6 +111,28 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!--    *********** Search by Volunteer *********** -->
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <form action="skillsByVolunteer" method="GET">
+                <div class="form-group row">
+                    <label for="volunteerSearch" class="col-3 col-form-label">Display Skills By Volunteer:</label>
+                    <div class="col-4">
+                        <select id="volunteerSearch" name="volunteerId" class="form-control" >
+                            <option th:each="volunteer: ${volunteers}"
+                                    th:value="${volunteer.id}"
+                                    th:text="${volunteer.firstName + ' ' + volunteer.lastName}">
+                                </option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a href="sightings"><button type="button" class="btn btn-danger">Reset Settings</button> </a>
+            </form>
         </div>
     </div>
 

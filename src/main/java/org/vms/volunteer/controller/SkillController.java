@@ -34,18 +34,7 @@ public class SkillController {
         return "skills";
     }
 
-    //              **************ADD skill-------------------This way did not work*************
-//    @PostMapping("addSkill")
-//    public String addSkill(Skill skill, HttpServletRequest request) {
-////        getting volunteerID
-//        String volunteerId = request.getParameter("volunteerId");
-//        skill.setVolunteer(volunteerService.getVolunteerByID(Integer.parseInt(volunteerId)));
-//
-//        skillService.addSkill(skill);
-//
-//        return "redirect:/skills";
-//    }
-
+    //              **************ADD skill*************
     @PostMapping("addSkill")
     public String addSkill(HttpServletRequest request, Model model) {
 //     pull out the volunteerIds data from the HttpServletRequest
@@ -102,4 +91,17 @@ public class SkillController {
         return "redirect:/skills";
     }
 
+    //              **************Search by volunteer*************
+    @GetMapping("skillsByVolunteer")
+    public String getSkillsByVolunteer(Integer volunteerId, Model model, HttpServletRequest request) {
+        Volunteer volunteer = volunteerService.getVolunteerByID(volunteerId);
+
+        List<Skill> skills = skillService.getSkillsByVolunteer(volunteer);
+        model.addAttribute("skills", skills);
+
+        List<Volunteer> volunteers = volunteerService.getAllVolunteers();
+        model.addAttribute("volunteers", volunteers);
+
+        return "skills";
+    }
 }

@@ -12,6 +12,6 @@ public interface SkillDao {
     void updateSkill(Skill skill);
     void deleteSkillByID(int id);
 
-
+    //    This is for the search feature to filter by volunteer
     List<Skill> getSkillsByVolunteer(Volunteer volunteer);
 }
