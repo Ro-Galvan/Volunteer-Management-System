@@ -1,4 +1,10 @@
 package org.vms.volunteer.dto;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -6,8 +12,13 @@ import java.util.Objects;
 public class Timesheet {
     private int id;
 //    private LocalTime time; // SQL equivalent is time Format: hh:mm:ss
+    @NotBlank(message = "Timesheet hours logged must not be empty.")
+    @Size(max = 5, message="Timesheet hours logged must be logged in full hour or half hour increments, example: 8, 4.5")
     private String hoursLogged;
-    private LocalDate date; //TODO MYSQL Format: YYYY-MM-DD
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
+    @NotNull(message = "The date must not be empty")
+    @Past(message = "The date must be in the past")
+    private LocalDate date; //MYSQL Format: YYYY-MM-DD
 
     //    FK associations- one-to-many relationships- use composition to place an object inside another object
     private Volunteer volunteer;

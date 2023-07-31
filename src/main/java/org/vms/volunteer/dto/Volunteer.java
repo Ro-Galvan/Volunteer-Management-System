@@ -1,15 +1,30 @@
 package org.vms.volunteer.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class Volunteer {
     private int id;
+    @NotBlank(message = "Volunteer first name must not be empty.")
+    @Size(max = 20, message="Volunteer first name must be less than 20 characters.")
     private String firstName;
+    @NotBlank(message = "Volunteer last name must not be empty.")
+    @Size(max = 30, message="Volunteer last name must be less than 30 characters.")
     private String lastName;
+    @NotBlank(message = "Volunteer phone number must not be empty.")
+    @Size(min = 12, max = 12, message="Volunteer phone number must be exactly 10 digits and 2 hyphens (no country code allowed) example: 123-456-7890")
     private String phoneNumber;
+    @NotBlank(message = "Volunteer email must not be empty.")
+    @Email(message = "Invalid email, must include an @ and be no more than 30 characters. Try again.")
     private String email;
+    @NotBlank(message = "City must not be empty.")
+    @Size(max = 25, message="City must be less than 25 characters.")
     private String city;
+    @NotBlank(message = "sState must not be empty.")
+    @Size(min = 2, max = 2, message="State must be exactly 2 characters example: NY")
     private String state;
 
 // managing the many-to-many relationship on the volunteer side

@@ -1,10 +1,16 @@
 package org.vms.volunteer.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Skill {
     private int id;
+    @NotBlank(message = "Skill title must not be empty.")
+    @Size(max = 50, message="Skill title must be less than 50 characters.")
     private String title;
+    @NotBlank(message = "Skill Additional Info must not be empty.")
+    @Size(max = 255, message="Skill Additional Info must be less than 255 characters.")
     private String additionalInfo;
     //    FK associations- one-to-many relationships- use composition to place an object inside another object
     private Volunteer volunteer;

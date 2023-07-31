@@ -1,14 +1,27 @@
 package org.vms.volunteer.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class Nonprofit {
     private int id;
+    @NotBlank(message = "Nonprofit name must not be empty.")
+    @Size(max = 250, message="Nonprofit name must be less than 250 characters.")
     private String companyName;
+    @NotBlank(message = "Nonprofit phone number must not be empty.")
+    @Size(min = 12, max = 12, message="Nonprofit phone number must be exactly 10 digits and 2 hyphens (no country code allowed) example: 123-456-7890")
     private String phoneNumber;
+    @NotBlank(message = "Nonprofit email must not be empty.")
+    @Email(message = "Invalid email, must include an @ and be no more than 40 characters. Try again.")
     private String email;
+    @NotBlank(message = "Nonprofit address must not be empty.")
+    @Size(max = 255, message="Nonprofit address must be less than 255 characters.")
     private String address;
+    @NotBlank(message = "Nonprofit mission must not be empty.")
+    @Size(max = 255, message="Nonprofit mission must be less than 255 characters.")
     private String mission;
 
 //  constructors
