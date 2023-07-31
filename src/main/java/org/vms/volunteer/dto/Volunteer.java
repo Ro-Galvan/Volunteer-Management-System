@@ -23,7 +23,7 @@ public class Volunteer {
     @NotBlank(message = "City must not be empty.")
     @Size(max = 25, message="City must be less than 25 characters.")
     private String city;
-    @NotBlank(message = "sState must not be empty.")
+    @NotBlank(message = "State must not be empty.")
     @Size(min = 2, max = 2, message="State must be exactly 2 characters example: NY")
     private String state;
 

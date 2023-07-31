@@ -29,7 +29,7 @@ public class AssignmentController {
     @Autowired
     NonprofitService nonprofitService;
 
-    //    TODO  The ConstraintViolation object holds information about the error; specifically, each one will hold the message of a
+//    The ConstraintViolation object holds information about the error; specifically, each one will hold the message of a
 //    validation error it found. In this situation, we would send the full set to the page to process like a list, printing out the errors.
 //   ******* FYI ******  makes the violations set shared among different requests, leading to unexpected behavior.
     Set<ConstraintViolation<Assignment>> violations = new HashSet<>();
@@ -43,7 +43,7 @@ public class AssignmentController {
         model.addAttribute("assignments", assignments);
         model.addAttribute("nonprofits", nonprofits);
 
-        //   TODO     added this for validations
+        //   added this for validations
         model.addAttribute("errors", violations);
 
         return "assignments";
@@ -69,7 +69,7 @@ public class AssignmentController {
         //        We instantiate our Validator object.
 //        We then pass the full Assignment object into the Validator and save the results in a “violations” class variable.
 //        We then check if we found any validation errors; if not, we add the Assignment.
-//        todo -ADDED FOR VALIDATIONS
+//        ADDED FOR VALIDATIONS
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(assignment);
 
@@ -90,7 +90,7 @@ public class AssignmentController {
         //adds Assignment & nonprofits selected by ID object as an attribute to model to display to web
         model.addAttribute("assignment", assignment);
         model.addAttribute("nonprofits", nonprofits);
-        //   TODO     added this for validations
+        //  added this for validations
         model.addAttribute("errors", violations);
 
         return "editAssignment";
@@ -107,7 +107,7 @@ public class AssignmentController {
         assignment.setDate(LocalDate.parse(request.getParameter("date")));
         assignment.setNonprofit(nonprofitService.getNonprofitByID(Integer.parseInt(nonprofitIDs)));
 
-        //  TODO added for validations
+        //  added for validations
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(assignment);
 

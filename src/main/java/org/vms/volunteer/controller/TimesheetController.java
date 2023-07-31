@@ -14,8 +14,13 @@ import org.vms.volunteer.service.TimesheetService;
 import org.vms.volunteer.service.VolunteerService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class TimesheetController {
@@ -28,6 +33,9 @@ public class TimesheetController {
     @Autowired
     AssignmentService assignmentService;
 
+    //    The ConstraintViolation object holds information about the error; specifically, each one will hold the message of a
+//    validation error it found. In this situation, we would send the full set to the page to process like a list, printing out the errors.
+    Set<ConstraintViolation<Timesheet>> violations = new HashSet<>();
 
 
     @GetMapping("timesheets")
@@ -40,6 +48,8 @@ public class TimesheetController {
         model.addAttribute("timesheets", timesheets);
         model.addAttribute("volunteers", volunteers);
         model.addAttribute("assignments", assignments);
+        //   added this for validations
+        model.addAttribute("errors", violations);
 
         return "timesheets";
     }
@@ -61,8 +71,14 @@ public class TimesheetController {
 
         model.addAttribute("timesheet", timesheet);
 
-        timesheetService.addTimesheet(timesheet);
+        //  ADDED FOR VALIDATIONS
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(timesheet);
 
+        if(violations.isEmpty()) {
+            timesheetService.addTimesheet(timesheet);
+            return "redirect:/timesheets";
+        }
         return "redirect:/timesheets";
     }
 
@@ -78,6 +94,8 @@ public class TimesheetController {
         model.addAttribute("timesheet", timesheet);
         model.addAttribute("volunteers", volunteers);
         model.addAttribute("assignments", assignments);
+        //   added this for validations
+        model.addAttribute("errors", violations);
 
         return "editTimesheet";
     }
@@ -95,8 +113,15 @@ public class TimesheetController {
         timesheet.setVolunteer(volunteerService.getVolunteerByID(Integer.parseInt(volunteerIDs)));
         timesheet.setAssignment(assignmentService.getAssignmentByID(Integer.parseInt(assignmentIDs)));
 
-        timesheetService.updateTimesheet(timesheet);
-        return "redirect:/timesheets";
+        //  TODO added for validations
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(timesheet);
+
+        if(violations.isEmpty()) {
+            timesheetService.updateTimesheet(timesheet);
+            return "redirect:/timesheets";
+        }
+        return "redirect:/editTimesheet?id="+id;
     }
 
 

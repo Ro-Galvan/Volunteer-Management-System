@@ -5,14 +5,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.vms.volunteer.dto.Assignment;
 import org.vms.volunteer.dto.Nonprofit;
 import org.vms.volunteer.dto.Volunteer;
 import org.vms.volunteer.service.NonprofitService;
 import org.vms.volunteer.service.VolunteerService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class VolunteerController {
@@ -22,6 +28,10 @@ public class VolunteerController {
     @Autowired
     NonprofitService nonprofitService;
 
+//   The ConstraintViolation object holds information about the error; specifically, each one will hold the message of a
+//    validation error it found. In this situation, we would send the full set to the page to process like a list, printing out the errors.
+    Set<ConstraintViolation<Volunteer>> violations = new HashSet<>();
+
     /**
      * We start by making our @GetMapping for volunteers.
      * We then bring in the Model to send data to the page.
@@ -30,7 +40,6 @@ public class VolunteerController {
      * @param model
      * @return
      */
-
     @GetMapping("volunteers")
     public String displayVolunteers(Model model) {
         List<Volunteer> volunteers = volunteerService.getAllVolunteers();
@@ -38,6 +47,8 @@ public class VolunteerController {
 
         model.addAttribute("volunteers", volunteers);
         model.addAttribute("nonprofits", nonprofits);
+        // added this for validations
+        model.addAttribute("errors", violations);
         return "volunteers";
     }
 //     * Once in the method, we use the HttpServletRequest to retrieve the fields from the form based on the name we set in the HTML for each input.
@@ -66,8 +77,14 @@ public class VolunteerController {
         }
         volunteer.setNonprofits(nonprofitArrayList);
 
-        volunteerService.addVolunteer(volunteer);
+        //   ADDED FOR VALIDATIONS
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(volunteer);
 
+        if(violations.isEmpty()) {
+            volunteerService.addVolunteer(volunteer);
+            return "redirect:/volunteers";
+        }
         return "redirect:/volunteers";
     }
 
@@ -76,14 +93,12 @@ public class VolunteerController {
     public String editVolunteer(Integer id, Model model) {
         Volunteer volunteer = volunteerService.getVolunteerByID(id);
         List<Nonprofit> nonprofits = nonprofitService.getAllNonprofits();
-//todo don't have the same as hero but don't think I need it
-        //        for(Nonprofit nonprofit : nonprofits) {
-//            nonprofit.setCompanyName(null);
-//        }
 
         //adds volunteer selected by ID object, nonprofits as an attribute to model to display to web
         model.addAttribute("volunteer", volunteer);
         model.addAttribute("nonprofits", nonprofits);
+        //  added  for validations
+        model.addAttribute("errors", violations);
 
         return "editVolunteer";
     }
@@ -106,8 +121,15 @@ public class VolunteerController {
         }
         volunteer.setNonprofits(nonprofitList);
 
-        volunteerService.updateVolunteer(volunteer);
-        return "redirect:/volunteers";
+        //  added for validations
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(volunteer);
+
+        if(violations.isEmpty()) {
+            volunteerService.updateVolunteer(volunteer);
+            return "redirect:/volunteers";
+        }
+        return "redirect:/editVolunteer?id="+id;
     }
 
     @GetMapping("deleteVolunteer")
