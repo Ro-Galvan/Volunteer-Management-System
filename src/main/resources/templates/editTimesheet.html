@@ -111,9 +111,11 @@
                         </select>
                     </div>
                 </div>
-
-                <input type="hidden" name="id" th:value="${timesheet.id}"/>
-                <button type="submit" class="btn btn-primary">Update Timesheet</button>
+                <div class="justify-content-center mr-6 mb-2 mt-4">
+                    <input type="hidden" name="id" th:value="${timesheet.id}"/>
+                    <button type="submit" class="btn btn-primary">Update Timesheet</button>
+                    <a href="#" th:href="@{/timesheets}" class="btn btn-danger">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

@@ -61,7 +61,7 @@
                     <label for="hoursLogged" class="col-3 col-form-label">
                         Hours Logged:</label>
                     <div class="col-9">
-                        <input type="text" name="hoursLogged"
+                        <input type="text" name="hoursLogged" placeholder=" Full or half hour increments ex: 4 or 2.5"
                                id="hoursLogged" class="form-control"/>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Timesheet ID</th>
+<!--                    <th>Timesheet ID</th>-->
                     <th>Hours Logged</th>
                     <th>Date</th>
                     <th>Volunteer</th>
@@ -131,7 +131,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="timesheet : ${timesheets}">
-                    <td th:text="${timesheet.id}">Timesheet ID</td>
+<!--                    <td th:text="${timesheet.id}">Timesheet ID</td>-->
                     <td th:text="${timesheet.hoursLogged}">Hours Logged</td>
                     <td th:text="${#temporals.format(timesheet.date, 'MM-dd-yyyy')}">Date</td>
                     <td th:text="${timesheet.volunteer != null ? timesheet.volunteer.firstName + ' ' + timesheet.volunteer.lastName : 'N/A'}">Volunteer</td>

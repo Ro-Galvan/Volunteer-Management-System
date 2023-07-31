@@ -78,7 +78,7 @@
                     <label for="phoneNumber" class="col-3 col-form-label">
                         Phone Number:</label>
                     <div class="col-9">
-                        <input type="text" name="phoneNumber"
+                        <input type="text" name="phoneNumber" placeholder="ex: 123-456-7890"
                                id="phoneNumber" class="form-control"/>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                     <label for="state" class="col-3 col-form-label">
                         State:</label>
                     <div class="col-9">
-                        <input type="text" name="state"
+                        <input type="text" name="state" placeholder="ex: NY"
                                id="state" class="form-control"/>
                     </div>
                 </div>
@@ -138,8 +138,8 @@
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
+<!--                    <th>Phone Number</th>-->
+<!--                    <th>Email</th>-->
                     <th>City</th>
                     <th>State</th>
                     <th>Details</th>
@@ -151,8 +151,8 @@
                 <tr th:each="volunteer : ${volunteers}">
                     <td th:text='${volunteer.firstName}'>Volunteer First Name</td>
                     <td th:text='${volunteer.lastName}'>Volunteer Last Name</td>
-                    <td th:text='${volunteer.phoneNumber}'>Volunteer Phone Number</td>
-                    <td th:text='${volunteer.email}'>Volunteer Email</td>
+<!--                    <td th:text='${volunteer.phoneNumber}'>Volunteer Phone Number</td>-->
+<!--                    <td th:text='${volunteer.email}'>Volunteer Email</td>-->
                     <td th:text='${volunteer.city}'>Volunteer City</td>
                     <td th:text='${volunteer.state}'>Volunteer State</td>
                     <td><a href="#" th:href="@{/detailVolunteer(id=${volunteer.id})}">Details</a></td>

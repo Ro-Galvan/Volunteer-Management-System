@@ -41,11 +41,17 @@
     <!--   th:if to check if we have any errors to display. We only display this div if there are errors. -->
     <!--    Inside the div, we loop through the errors with th:each and display the message of each one with th:text.-->
     <!--    We assign the class ‘alert alert-danger' to each message so it will display as a red alert box to make it clear there were errors.-->
-    <div class="col-12 m-1 text-center"
-         th:if="${!errors.isEmpty()}">
-        <p class="alert alert-danger" th:each="error : ${errors}"
-           th:text="${error.message}">Error message</p>
+<!--    <div class="col-12 m-1 text-center"-->
+<!--         th:if="${!errors.isEmpty()}">-->
+<!--        <p class="alert alert-danger" th:each="error : ${errors}"-->
+<!--           th:text="${error.message}">Error message</p>-->
+<!--    </div>-->
+
+    <!-- HAD TO UPDATE --was causing an error when Display Skills By Volunteer:  Add this code to display validation errors -->
+    <div class="col-12 m-1 text-center" th:if="${not #strings.isEmpty(errors)}">
+        <p class="alert alert-danger" th:each="error : ${errors}" th:text="${error.message}"></p>
     </div>
+
 
     <!--   *********** Form *********** -->
     <div class="row m-4 border border-dark">
@@ -135,7 +141,6 @@
                             <option th:each="volunteer: ${volunteers}"
                                     th:value="${volunteer.id}"
                                     th:text="${volunteer.firstName + ' ' + volunteer.lastName}">
-                                    th:text="${skill.volunteer skill.volunteer.firstName + ' ' + skill.volunteer.lastName}">
                                 </option>
                         </select>
                     </div>

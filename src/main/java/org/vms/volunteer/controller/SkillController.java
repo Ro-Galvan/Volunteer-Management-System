@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.vms.volunteer.dto.Assignment;
 import org.vms.volunteer.dto.Nonprofit;
 import org.vms.volunteer.dto.Skill;
@@ -121,7 +122,7 @@ public class SkillController {
 
     //              **************Search by volunteer*************
     @GetMapping("skillsByVolunteer")
-    public String getSkillsByVolunteer(Integer volunteerID, Model model, HttpServletRequest request) {
+    public String getSkillsByVolunteer(@RequestParam Integer volunteerID, Model model, HttpServletRequest request) {
         Volunteer volunteer = volunteerService.getVolunteerByID(volunteerID);
 
         List<Skill> skills = skillService.getSkillsByVolunteer(volunteer);
