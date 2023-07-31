@@ -5,16 +5,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.vms.volunteer.dto.Assignment;
 import org.vms.volunteer.dto.Nonprofit;
 import org.vms.volunteer.service.NonprofitService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class NonprofitController {
     @Autowired
     NonprofitService nonprofitService;
+
+    //    validation error it found. In this situation, we would send the full set to the page to process like a list, printing out the errors.
+//   ******* FYI ******  makes the violations set shared among different requests, leading to unexpected behavior.
+    Set<ConstraintViolation<Nonprofit>> violations = new HashSet<>();
 
 
     @GetMapping("nonprofits")
@@ -22,6 +32,9 @@ public class NonprofitController {
         List<Nonprofit> nonprofits = nonprofitService.getAllNonprofits();
 
         model.addAttribute("nonprofits", nonprofits);
+
+        //   added this for validations
+        model.addAttribute("errors", violations);
         return "nonprofits";
     }
 
@@ -42,10 +55,16 @@ public class NonprofitController {
         nonprofit.setEmail(request.getParameter("email"));
         nonprofit.setAddress(request.getParameter("address"));
         nonprofit.setMission(request.getParameter("mission"));
+//added for validations
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(nonprofit);
 
-        nonprofitService.addNonprofit(nonprofit);
-
+        if(violations.isEmpty()) {
+            nonprofitService.addNonprofit(nonprofit);
+            return "redirect:/nonprofits";
+        }
         return "redirect:/nonprofits";
+
     }
 
     //              **************EDIT Nonprofit*************
@@ -53,12 +72,21 @@ public class NonprofitController {
     public String editNonprofit(Integer id, Model model) {
         Nonprofit nonprofit = nonprofitService.getNonprofitByID(id);
         model.addAttribute("nonprofit", nonprofit);
+        //  added this for validations
+        model.addAttribute("errors", violations);
         return "editNonprofit";
     }
     @PostMapping("editNonprofit")
-    public String performEditNonprofit(Nonprofit nonprofit) {
-        nonprofitService.updateNonprofit(nonprofit);
-        return "redirect:/nonprofits";
+    public String performEditNonprofit(Integer id, Nonprofit nonprofit) {
+        //   added for validations
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(nonprofit);
+
+        if(violations.isEmpty()) {
+            nonprofitService.updateNonprofit(nonprofit);
+            return "redirect:/nonprofits";
+        }
+        return "redirect:/editNonprofit?id="+id;
     }
 
     //              **************DELETE Nonprofit*************

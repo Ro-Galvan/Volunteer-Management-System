@@ -69,6 +69,7 @@ public class AssignmentController {
         //        We instantiate our Validator object.
 //        We then pass the full Assignment object into the Validator and save the results in a “violations” class variable.
 //        We then check if we found any validation errors; if not, we add the Assignment.
+//        todo -ADDED FOR VALIDATIONS
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(assignment);
 
