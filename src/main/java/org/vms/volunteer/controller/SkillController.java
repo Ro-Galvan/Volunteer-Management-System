@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.vms.volunteer.dto.Assignment;
 import org.vms.volunteer.dto.Nonprofit;
 import org.vms.volunteer.dto.Skill;
 import org.vms.volunteer.dto.Volunteer;
@@ -12,8 +13,13 @@ import org.vms.volunteer.service.SkillService;
 import org.vms.volunteer.service.VolunteerService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class SkillController {
@@ -23,6 +29,10 @@ public class SkillController {
     @Autowired
     VolunteerService volunteerService;
 
+//   The ConstraintViolation object holds information about the error; specifically, each one will hold the message of a
+//    validation error it found. In this situation, we would send the full set to the page to process like a list, printing out the errors.
+    Set<ConstraintViolation<Skill>> violations = new HashSet<>();
+
     @GetMapping("skills")
     public String displaySkills(Model model) {
         List<Skill> skills = skillService.getAllSkills();
@@ -30,6 +40,8 @@ public class SkillController {
 
         model.addAttribute("skills", skills);
         model.addAttribute("volunteers", volunteers);
+        //    added this for validations
+        model.addAttribute("errors", violations);
 
         return "skills";
     }
@@ -49,11 +61,18 @@ public class SkillController {
         //TODO this will cause an error if volunteer associated with skill is left null
         skill.setVolunteer(volunteerService.getVolunteerByID(Integer.parseInt(volunteerId)));
 
-
         model.addAttribute("skill", skill);
 
-        skillService.addSkill(skill);
+        //        We instantiate our Validator object.
+//        We then pass the full Skill object into the Validator and save the results in a “violations” class variable.
+//        We then check if we found any validation errors; if not, we add the Skill.
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(skill);
 
+        if(violations.isEmpty()) {
+            skillService.addSkill(skill);
+            return "redirect:/skills";
+        }
         return "redirect:/skills";
     }
 
@@ -67,6 +86,8 @@ public class SkillController {
         //adds Skill selected by ID object, volunteers as an attribute to model to display to web
         model.addAttribute("skill", skill);
         model.addAttribute("volunteers", volunteers);
+        //  added this for validations
+        model.addAttribute("errors", violations);
 
         return "editSkill";
     }
@@ -81,8 +102,15 @@ public class SkillController {
         skill.setAdditionalInfo(request.getParameter("additionalInfo"));
         skill.setVolunteer(volunteerService.getVolunteerByID(Integer.parseInt(volunteerIDs)));
 
-        skillService.updateSkill(skill);
-        return "redirect:/skills";
+        //   added for validations
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(skill);
+
+        if(violations.isEmpty()) {
+            skillService.updateSkill(skill);
+            return "redirect:/skills";
+        }
+        return "redirect:/editSkill?id="+id;
     }
 
     @GetMapping("deleteSkill")

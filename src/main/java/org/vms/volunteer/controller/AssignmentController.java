@@ -91,7 +91,6 @@ public class AssignmentController {
         model.addAttribute("assignment", assignment);
         model.addAttribute("nonprofits", nonprofits);
         //   TODO     added this for validations
-
         model.addAttribute("errors", violations);
 
         return "editAssignment";
