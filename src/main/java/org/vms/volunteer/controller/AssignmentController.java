@@ -31,6 +31,7 @@ public class AssignmentController {
 
     //    TODO  The ConstraintViolation object holds information about the error; specifically, each one will hold the message of a
 //    validation error it found. In this situation, we would send the full set to the page to process like a list, printing out the errors.
+//   ******* FYI ******  makes the violations set shared among different requests, leading to unexpected behavior.
     Set<ConstraintViolation<Assignment>> violations = new HashSet<>();
 
     @GetMapping("assignments")

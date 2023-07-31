@@ -17,7 +17,7 @@ public class Timesheet {
     private String hoursLogged;
     @DateTimeFormat(pattern = "MM-dd-yyyy")
     @NotNull(message = "The date must not be empty")
-    @Past(message = "The date must be in the past")
+//    @Past(message = "The date must be in the past") //can be in the past as someone might be late in entering a Timesheet
     private LocalDate date; //MYSQL Format: YYYY-MM-DD
 
     //    FK associations- one-to-many relationships- use composition to place an object inside another object
