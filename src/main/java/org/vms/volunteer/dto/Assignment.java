@@ -20,7 +20,6 @@ public class Assignment {
     private String additionalInfo;
     @DateTimeFormat(pattern = "MM-dd-yyyy")
     @NotNull(message = "The date must not be empty")
-    @Past(message = "The date must be in the past")
     private LocalDate date; //MYSQL Format: YYYY-MM-DD
 
 //    FK association-one-to-many relationships-use composition to place an object inside another object

@@ -37,6 +37,16 @@
             <a href="timesheets" class="btn btn-outline-primary btn-lg">Timesheet</a>
         </div>
     </div>
+
+    <!--   th:if to check if we have any errors to display. We only display this div if there are errors. -->
+    <!--    Inside the div, we loop through the errors with th:each and display the message of each one with th:text.-->
+    <!--    We assign the class ‘alert alert-danger' to each message so it will display as a red alert box to make it clear there were errors.-->
+    <div class="col-12 m-1 text-center"
+         th:if="${!errors.isEmpty()}">
+        <p class="alert alert-danger" th:each="error : ${errors}"
+           th:text="${error.message}">Error message</p>
+    </div>
+
     <!--   *********** Form *********** -->
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
@@ -98,12 +108,12 @@
     </div>
 
     <!--    *********** Table *********** -->
-    <div class="row m-4 border border-dark">
+    <div class="row m-8 border border-dark">
         <div class="col text-center m-3">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Assignment ID</th>
+<!--                    <th>Assignment ID</th>-->
                     <th>Assignment Title</th>
                     <th>Additional Info</th>
                     <th>Date</th>
@@ -114,10 +124,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="assignment : ${assignments}">
-                    <td th:text="${assignment.id}">Assignment ID</td>
+<!--                    <td th:text="${assignment.id}">Assignment ID</td>-->
                     <td th:text="${assignment.title}">Assignment Title</td>
                     <td th:text="${assignment.additionalInfo}">Additional Info</td>
-                    <td th:text="${#temporals.format(assignment.date, 'MM-dd-yyyy')}">Date</td>
+                    <td th:text="${#temporals.format(assignment.date, 'MM-dd-yyyy')}">Date        </td>
                     <td th:text="${assignment.nonprofit != null ? assignment.nonprofit.companyName : 'N/A'}">Nonprofit</td>
                     <td><a href="#" th:href="@{/editAssignment(id=${assignment.id})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteAssignment(id=${assignment.id})}">Delete</a></td>

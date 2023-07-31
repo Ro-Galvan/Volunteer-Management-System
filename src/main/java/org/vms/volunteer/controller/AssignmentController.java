@@ -13,8 +13,13 @@ import org.vms.volunteer.service.AssignmentService;
 import org.vms.volunteer.service.NonprofitService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AssignmentController {
@@ -24,6 +29,10 @@ public class AssignmentController {
     @Autowired
     NonprofitService nonprofitService;
 
+    //    TODO  The ConstraintViolation object holds information about the error; specifically, each one will hold the message of a
+//    validation error it found. In this situation, we would send the full set to the page to process like a list, printing out the errors.
+    Set<ConstraintViolation<Assignment>> violations = new HashSet<>();
+
     @GetMapping("assignments")
     public String displayAssignments(Model model) {
         List<Assignment> assignments = assignmentService.getAllAssignments();
@@ -32,6 +41,9 @@ public class AssignmentController {
 //        adding lists of assignments and nonprofits
         model.addAttribute("assignments", assignments);
         model.addAttribute("nonprofits", nonprofits);
+
+        //   TODO     added this for validations
+        model.addAttribute("errors", violations);
 
         return "assignments";
     }
@@ -49,14 +61,20 @@ public class AssignmentController {
         assignment.setDate(LocalDate.parse(request.getParameter("date")));
 
 //      setting nonprofit using nonprofitService
-        //TODO this will cause an error if volunteer associated with skill is left null
         assignment.setNonprofit(nonprofitService.getNonprofitByID(Integer.parseInt(nonprofitId)));
-
 
         model.addAttribute("assignment", assignment);
 
-        assignmentService.addAssignment(assignment);
+        //        We instantiate our Validator object.
+//        We then pass the full Assignment object into the Validator and save the results in a “violations” class variable.
+//        We then check if we found any validation errors; if not, we add the Assignment.
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(assignment);
 
+        if(violations.isEmpty()) {
+            assignmentService.addAssignment(assignment);
+            return "redirect:/assignments";
+        }
         return "redirect:/assignments";
     }
 
@@ -70,6 +88,9 @@ public class AssignmentController {
         //adds Assignment & nonprofits selected by ID object as an attribute to model to display to web
         model.addAttribute("assignment", assignment);
         model.addAttribute("nonprofits", nonprofits);
+        //   TODO     added this for validations
+
+        model.addAttribute("errors", violations);
 
         return "editAssignment";
     }
@@ -85,8 +106,15 @@ public class AssignmentController {
         assignment.setDate(LocalDate.parse(request.getParameter("date")));
         assignment.setNonprofit(nonprofitService.getNonprofitByID(Integer.parseInt(nonprofitIDs)));
 
-        assignmentService.updateAssignment(assignment);
-        return "redirect:/assignments";
+        //  TODO added for validations
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(assignment);
+
+        if(violations.isEmpty()) {
+            assignmentService.updateAssignment(assignment);
+            return "redirect:/assignments";
+        }
+        return "redirect:/editAssignment?id="+id;
     }
 
     @GetMapping("deleteAssignment")
