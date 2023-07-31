@@ -72,7 +72,7 @@
                     <label for="volunteers" class="col-3 col-form-label">
                         Volunteers:</label>
                     <div class="col-9">
-                        <select multiple id="volunteers" name="volunteerID" class="form-control">
+                        <select id="volunteers" name="volunteerID" class="form-control">
                             <option th:each="volunteer : ${volunteers}"
                                     th:value="${volunteer.id}"
                                     th:text="${volunteer.firstName + ' '
