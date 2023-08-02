@@ -1,5 +1,5 @@
 # Volunteer Management System
-Volunteer Management System for Nonprofit companies to help them organize their volunteers, assignments and timesheets
+Volunteer Management System for Nonprofit companies to help them organize their volunteers, assignments and timesheets. I used SQL to read and write to the database. 
 
 
 ## Visuals
