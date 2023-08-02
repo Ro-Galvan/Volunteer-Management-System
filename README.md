@@ -1,6 +1,11 @@
 # Volunteer Management System
 Volunteer Management System for Nonprofit companies to help them organize their volunteers, assignments and timesheets. I used SQL to read and write to the database. 
 
+## Relationships
+
+many-to-many: Volunteers and Nonprofit 
+
+one-to-many: Volunteer-Skill, Volunteer-Timesheet, Assignment-Timesheet, Nonporfit-Assignment
 
 ## Visuals
 ERD:
