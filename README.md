@@ -1,5 +1,5 @@
 # Volunteer Management System
-Volunteer Management System for Nonprofit companies to help them organize their volunteers, assignments and timesheets. I used Spring Boot with JDBC Template to read and write to the database and Thymeleaf to display the frontent content.
+Volunteer Management System for Nonprofit companies to help them organize their volunteers, assignments and timesheets. I used Spring Boot with JDBC Template to read and write to the database and Thymeleaf to display the frontend content.
 
 ## Relationships
 
